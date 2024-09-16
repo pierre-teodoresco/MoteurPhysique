@@ -3,7 +3,6 @@
 //  MoteurPhysique
 //
 //  Created by Pierre Teodoresco on 16/09/2024.
-// OK
 //
 
 #ifndef Vector3D_hpp
