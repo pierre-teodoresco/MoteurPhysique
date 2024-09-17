@@ -55,9 +55,12 @@ Vector3D Vector3D::operator*(const Vector3D& other) const {
 }
 
 Vector3D& Vector3D::operator*=(const Vector3D& other) {
-    m_x = m_y * other.z() - m_z * other.y();
-    m_y = m_z * other.x() - m_x * other.z();
-    m_z = m_x * other.y() - m_y * other.x();
+    // keep track of current components
+    float oldX = m_x, oldY = m_y, oldZ = m_z;
+    
+    m_x = oldY * other.z() - oldZ * other.y();
+    m_y = oldZ * other.x() - oldX * other.z();
+    m_z = oldX * other.y() - oldY * other.x();
     return *this;
 }
 
@@ -102,7 +105,7 @@ Vector3D Vector3D::normalize() const {
     return {m_x / normValue, m_y / normValue, m_z / normValue};
 }
 
-void Vector3D::normalize() {
+void Vector3D::normalizeInPlace() {
     float normValue = norm();
     if (normValue != 0) {
         m_x /= normValue;
