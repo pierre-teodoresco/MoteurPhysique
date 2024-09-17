@@ -1,8 +1,13 @@
 #include "ofMain.h"
 #include "ofApp.h"
 
+#include "Vector3D/testVector3D.h"
+
 //========================================================================
 int main( ){
+    
+    // Unit Tests
+    test::startVector3DTest();
 
 	//Use ofGLFWWindowSettings for more options like multi-monitor fullscreen
 	ofGLWindowSettings settings;

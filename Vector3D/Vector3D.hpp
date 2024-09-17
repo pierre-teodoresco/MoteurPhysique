@@ -57,7 +57,7 @@ public:
     
     // Normalization
     Vector3D normalize() const;
-    void normalize();
+    void normalizeInPlace();
 };
 
 #endif /* Vector3D_hpp */
