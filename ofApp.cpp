@@ -4,8 +4,8 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    Vector3D pos(100.f, 500.f, 0.f);
-    Vector3D velocity(70.f, -30.f, 0.f);
+    Vector3D pos(0.f, 700.f, 0.f);
+    Vector3D velocity(40.f, -100.f, 0.f);
     p = new Particle(pos, velocity, 5);
 }
 
