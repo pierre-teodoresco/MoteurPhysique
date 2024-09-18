@@ -4,14 +4,20 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    Vector3D pos(100.f, 100.f, 0.f);
-    Vector3D velocity(0.f, -9.81f, 0.f);
-    p = new Particle(pos, velocity, 20);
+    Vector3D pos(100.f, 500.f, 0.f);
+    Vector3D velocity(70.f, -30.f, 0.f);
+    p = new Particle(pos, velocity, 5);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    p->integrate(1/60);
+    // Gravity
+    const Vector3D acceleration(0.f, 9.81f, 0.f);
+    const Vector3D gravity = acceleration * p->mass();
+    p->addForce(gravity);
+    
+    float dt = 1.0f / 60.0f;
+    p->integrate(dt);
 }
 
 //--------------------------------------------------------------

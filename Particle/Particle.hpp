@@ -30,15 +30,16 @@ public:
     /* GETTERS */
     
     // Position, velocity, and acceleration
-    Vector3D position() const;
-    Vector3D velocity() const;
-    Vector3D acceleration() const;
+    inline Vector3D position() const;
+    inline Vector3D velocity() const;
+    inline Vector3D acceleration() const;
 
     // Inverse mass
-    float inverseMass() const;
+    inline float inverseMass() const;
     void setInverseMass(float inverseMass);
     
     // Mass
+    float mass() const;
     void setMass(float mass);
     
     // Force accumulator

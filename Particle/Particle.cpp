@@ -16,26 +16,33 @@ Particle::Particle(const Vector3D& position, const Vector3D& velocity, float mas
 /* GETTERS */
 
 // Get position
-Vector3D Particle::position() const {
+inline Vector3D Particle::position() const {
     return m_position;
 }
 
 // Get velocity
-Vector3D Particle::velocity() const {
+inline Vector3D Particle::velocity() const {
     return m_velocity;
 }
 
 // Get acceleration
-Vector3D Particle::acceleration() const {
+inline Vector3D Particle::acceleration() const {
     return m_acceleration;
 }
 
 // Get inverse mass
-float Particle::inverseMass() const {
+inline float Particle::inverseMass() const {
     return m_inverseMass;
 }
 
 /* SETTERS */
+
+// Get Mass
+float Particle::mass() const {
+    // TODO : handle static object with inverseMass at 0
+    assert(inverseMass() != 0);
+    return 1.f / m_inverseMass;
+}
 
 // Set inverse mass
 void Particle::setInverseMass(float inverseMass) {
@@ -61,17 +68,17 @@ void Particle::addForce(const Vector3D& force) {
 /* INTEGRATOR */
 
 // Euler integration to update position and velocity
-void Particle::integrate(float duration) {
+void Particle::integrate(float dt) {
     if (m_inverseMass <= 0.0f) return; // If the particle has infinite mass, do not move it
 
     // Update position using velocity
-    m_position += m_velocity * duration;
+    m_position += m_velocity * dt;
     
     // Calculate acceleration from the accumulated force
     m_acceleration = m_forceAccum * m_inverseMass;
     
     // Update velocity using acceleration
-    m_velocity += m_acceleration * duration;
+    m_velocity += m_acceleration * dt;
     
     // Reset accumulated forces after integration
     clearForces();
