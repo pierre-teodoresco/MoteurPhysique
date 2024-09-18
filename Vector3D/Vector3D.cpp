@@ -11,9 +11,6 @@
 /* CONSTRUCTORS */
 Vector3D::Vector3D(float x, float y, float z): m_x(x), m_y(y), m_z(z) {}
 
-/* DESTRUCTOR */
-Vector3D::~Vector3D() {}
-
 /* GETTERS */
 
 // Attributes
@@ -112,4 +109,14 @@ void Vector3D::normalizeInPlace() {
         m_y /= normValue;
         m_z /= normValue;
     }
+}
+
+/* OPEN FRAMEWORK */
+
+glm::vec2 Vector3D::v2() const {
+    return glm::vec2(m_x, m_y);
+}
+
+glm::vec3 Vector3D::v3() const {
+    return glm::vec3(m_x, m_y, m_z);
 }

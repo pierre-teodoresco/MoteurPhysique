@@ -8,6 +8,9 @@
 #ifndef Vector3D_hpp
 #define Vector3D_hpp
 
+#include "glm/vec2.hpp"
+#include "glm/vec3.hpp"
+
 class Vector3D {
 
 private:
@@ -18,7 +21,7 @@ public:
     Vector3D(float x = 0.f, float y = 0.f, float z = 0.f);
     
     /* DESTRUCTOR */
-    ~Vector3D();
+    ~Vector3D() = default;
     
     /* GETTERS */
     
@@ -58,6 +61,11 @@ public:
     // Normalization
     Vector3D normalize() const;
     void normalizeInPlace();
+    
+    /* OPEN FRAMEWORK */
+    glm::vec2 v2() const;
+    glm::vec3 v3() const;
+    
 };
 
 #endif /* Vector3D_hpp */
