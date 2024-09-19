@@ -8,19 +8,16 @@
 #ifndef Ballistic_hpp
 #define Ballistic_hpp
 
-#include "Particle/Particle.hpp"
-#include <vector>
-
 namespace Ballistic {
-
-static Particle* p;
-static std::vector<Vector3D> trajectory;
 
 void setup();
 void update();
 void draw();
 void exit();
+void createParticle(char type);
+void mousePressed(int x, int y);  // Gérer le clic de la souris
 
 }
 
 #endif /* Ballistic_hpp */
+

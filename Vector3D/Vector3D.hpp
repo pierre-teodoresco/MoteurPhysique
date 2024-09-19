@@ -41,6 +41,10 @@ public:
     Vector3D operator*(float scalar) const;
     Vector3D& operator*=(float other);
     
+    // Scalar division
+    Vector3D operator/(float scalar) const;
+    Vector3D& operator/=(float other);
+    
     // Cross product (produit vectoriel)
     Vector3D operator*(const Vector3D& other) const;
     Vector3D& operator*=(const Vector3D& other);
