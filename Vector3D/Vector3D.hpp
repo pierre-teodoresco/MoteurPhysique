@@ -7,6 +7,10 @@
 
 #ifndef Vector3D_hpp
 #define Vector3D_hpp
+
+#include "glm/vec2.hpp"
+#include "glm/vec3.hpp"
+
 #include <string>
 class Vector3D {
 
@@ -18,14 +22,14 @@ public:
     Vector3D(float x = 0.f, float y = 0.f, float z = 0.f);
     
     /* DESTRUCTOR */
-    ~Vector3D();
+    ~Vector3D() = default;
     
     /* GETTERS */
     
     // Attributes
-    float x() const;
-    float y() const;
-    float z() const;
+    inline float x() const { return m_x; }
+    inline float y() const { return m_y; }
+    inline float z() const { return m_z; }
     
     // Computed values
     float norm() const;
@@ -63,6 +67,11 @@ public:
     // Normalization
     Vector3D normalize() const;
     void normalizeInPlace();
+    
+    /* OPEN FRAMEWORK */
+    glm::vec2 v2() const;
+    glm::vec3 v3() const;
+    
 };
 
 #endif /* Vector3D_hpp */
