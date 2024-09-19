@@ -6,7 +6,9 @@
 //
 
 #include "Vector3D.hpp"
+
 #include <cmath>
+#include <stdexcept>
 
 /* CONSTRUCTORS */
 Vector3D::Vector3D(float x, float y, float z): m_x(x), m_y(y), m_z(z) {}
@@ -34,6 +36,25 @@ Vector3D& Vector3D::operator*=(float scalar) {
     m_x *= scalar;
     m_y *= scalar;
     m_z *= scalar;
+    return *this;
+}
+
+// Scalar division (retourne un nouveau vecteur)
+Vector3D Vector3D::operator/(float scalar) const {
+    if (scalar == 0.0f) {
+        throw std::runtime_error("Division by zero is undefined.");
+    }
+    return {m_x / scalar, m_y / scalar, m_z / scalar};
+}
+
+// Scalar division in place (modifie le vecteur actuel)
+Vector3D& Vector3D::operator/=(float scalar) {
+    if (scalar == 0.0f) {
+        throw std::runtime_error("Division by zero is undefined.");
+    }
+    m_x /= scalar;
+    m_y /= scalar;
+    m_z /= scalar;
     return *this;
 }
 

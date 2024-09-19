@@ -15,7 +15,9 @@ void update();
 void draw();
 void exit();
 void createParticle(char type);
+void mousePressed(int x, int y);  // Gérer le clic de la souris
 
 }
 
 #endif /* Ballistic_hpp */
+

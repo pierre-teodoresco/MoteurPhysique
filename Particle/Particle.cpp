@@ -7,6 +7,8 @@
 
 #include "Particle.hpp"
 
+#include <stdexcept>
+
 /* CONSTRUCTORS */
 Particle::Particle(const Vector3D& position, const Vector3D& velocity, float mass)
     : m_position(position), m_velocity(velocity), m_forceAccum(0, 0, 0), m_acceleration(0, 0, 0) {
@@ -17,8 +19,9 @@ Particle::Particle(const Vector3D& position, const Vector3D& velocity, float mas
 
 // Get Mass
 float Particle::mass() const {
-    // TODO : handle static object with inverseMass at 0
-    assert(m_inverseMass != 0.0f);
+    if (m_inverseMass == 0.0f) {
+        throw std::runtime_error("Mass can't be null");
+    }
     return 1.f / m_inverseMass;
 }
 
@@ -29,8 +32,9 @@ void Particle::setInverseMass(float inverseMass) {
 
 // Set mass
 void Particle::setMass(float mass) {
-    // TODO : handle stuff when mass param is 0
-    assert(mass != 0.0f);
+    if (mass == 0.0f) {
+        throw std::runtime_error("Mass can't be null");
+    }
     m_inverseMass = 1.0f / mass;
 }
 
