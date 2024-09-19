@@ -37,8 +37,8 @@ void Particle::setMass(float mass) {
 /* FORCE ACCUMULATOR */
 
 // Add a force to the particle
-void Particle::applyForce(const Vector3D& acceleration) {
-    m_forceAccum += acceleration * mass();
+void Particle::applyForce(const Vector3D& force) {
+    m_forceAccum += force;
 }
 
 /* INTEGRATOR */
