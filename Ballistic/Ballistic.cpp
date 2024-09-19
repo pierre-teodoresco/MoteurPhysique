@@ -35,7 +35,7 @@ void Ballistic::update() {
 
 void Ballistic::draw() {
     // Les textes et les trajectoires sont blancs
-    ofSetColor(255, 255, 255);
+    ofSetColor(ofColor::white);
     
     // Afficher le temps de frame
     ofDrawBitmapString("Frame time: " + ofToString(ofGetLastFrameTime()), 10, 20);
