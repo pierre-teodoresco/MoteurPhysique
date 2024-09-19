@@ -7,6 +7,7 @@
 
 #include "Ballistic.hpp"
 #include "ofMain.h"
+#include "Vector3D/Vector3D.hpp"
 
 
 void Ballistic::setup() {
