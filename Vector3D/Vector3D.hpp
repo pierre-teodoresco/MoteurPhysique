@@ -26,9 +26,9 @@ public:
     /* GETTERS */
     
     // Attributes
-    float x() const;
-    float y() const;
-    float z() const;
+    inline float x() const { return m_x; }
+    inline float y() const { return m_y; }
+    inline float z() const { return m_z; }
     
     // Computed values
     float norm() const;

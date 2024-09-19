@@ -2,8 +2,6 @@
 
 #include "ofMain.h"
 
-#include "Particle/Particle.hpp"
-
 class ofApp : public ofBaseApp{
 
 public:
@@ -25,8 +23,4 @@ public:
     void dragEvent(ofDragInfo dragInfo) override;
     void gotMessage(ofMessage msg) override;
 
-public:
-    
-    // Particle
-    Particle* p;
 };

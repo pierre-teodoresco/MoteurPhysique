@@ -26,16 +26,14 @@ public:
     
     /* DESTRUCTOR */
     ~Particle() = default;
-    
-    /* GETTERS */
-    
+        
     // Position, velocity, and acceleration
-    inline Vector3D position() const;
-    inline Vector3D velocity() const;
-    inline Vector3D acceleration() const;
+    inline const Vector3D& position() const { return m_position; }
+    inline const Vector3D& velocity() const { return m_velocity; }
+    inline const Vector3D& acceleration() const { return m_acceleration; }
 
     // Inverse mass
-    inline float inverseMass() const;
+    inline float inverseMass() const { return m_inverseMass; }
     void setInverseMass(float inverseMass);
     
     // Mass
@@ -43,7 +41,7 @@ public:
     void setMass(float mass);
     
     // Force accumulator
-    void addForce(const Vector3D& force);
+    void applyForce(const Vector3D& acceleration);
     
     /* INTEGRATORS */
     
@@ -54,7 +52,7 @@ public:
     void clearForces();
     
     /* OPEN FRAMEWORK */
-    void draw() const;
+    void draw(float radius) const;
 };
 
 #endif /* Particle_hpp */

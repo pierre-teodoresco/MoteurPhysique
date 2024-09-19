@@ -13,34 +13,12 @@ Particle::Particle(const Vector3D& position, const Vector3D& velocity, float mas
     setMass(mass); // Initialize mass (or inverse mass) here
 }
 
-/* GETTERS */
-
-// Get position
-inline Vector3D Particle::position() const {
-    return m_position;
-}
-
-// Get velocity
-inline Vector3D Particle::velocity() const {
-    return m_velocity;
-}
-
-// Get acceleration
-inline Vector3D Particle::acceleration() const {
-    return m_acceleration;
-}
-
-// Get inverse mass
-inline float Particle::inverseMass() const {
-    return m_inverseMass;
-}
-
 /* SETTERS */
 
 // Get Mass
 float Particle::mass() const {
     // TODO : handle static object with inverseMass at 0
-    assert(inverseMass() != 0);
+    assert(m_inverseMass != 0.0f);
     return 1.f / m_inverseMass;
 }
 
@@ -51,18 +29,16 @@ void Particle::setInverseMass(float inverseMass) {
 
 // Set mass
 void Particle::setMass(float mass) {
-    if (mass == 0.0f) {
-        m_inverseMass = 0.0f;  // Infinite mass (immovable object)
-    } else {
-        m_inverseMass = 1.0f / mass;
-    }
+    // TODO : handle stuff when mass param is 0
+    assert(mass != 0.0f);
+    m_inverseMass = 1.0f / mass;
 }
 
 /* FORCE ACCUMULATOR */
 
 // Add a force to the particle
-void Particle::addForce(const Vector3D& force) {
-    m_forceAccum += force;
+void Particle::applyForce(const Vector3D& acceleration) {
+    m_forceAccum += acceleration * mass();
 }
 
 /* INTEGRATOR */
@@ -93,6 +69,6 @@ void Particle::clearForces() {
 
 #include "ofMain.h"
 
-void Particle::draw() const {
-    ofDrawCircle(m_position.v2(), 1.f / m_inverseMass);
+void Particle::draw(float radius) const {
+    ofDrawCircle(m_position.v2(), radius);
 }

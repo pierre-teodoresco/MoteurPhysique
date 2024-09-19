@@ -13,17 +13,12 @@ Vector3D::Vector3D(float x, float y, float z): m_x(x), m_y(y), m_z(z) {}
 
 /* GETTERS */
 
-// Attributes
-inline float Vector3D::x() const { return m_x; }
-inline float Vector3D::y() const { return m_y; }
-inline float Vector3D::z() const { return m_z; }
-
 // Computed values
 float Vector3D::norm() const {
     return sqrt(squaredNorm());
 }
 
-inline float Vector3D::squaredNorm() const {
+float Vector3D::squaredNorm() const {
     return m_x*m_x + m_y*m_y + m_z*m_z;
 }
 

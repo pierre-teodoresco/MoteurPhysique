@@ -1,33 +1,25 @@
 #include "ofApp.h"
 
-#include "Vector3D/Vector3D.hpp"
+#include "Ballistic/Ballistic.hpp"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    Vector3D pos(0.f, 700.f, 0.f);
-    Vector3D velocity(40.f, -100.f, 0.f);
-    p = new Particle(pos, velocity, 5);
+    Ballistic::setup();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    // Gravity
-    const Vector3D acceleration(0.f, 9.81f, 0.f);
-    const Vector3D gravity = acceleration * p->mass();
-    p->addForce(gravity);
-    
-    float dt = 1.0f / 60.0f;
-    p->integrate(dt);
+    Ballistic::update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    p->draw();
+    Ballistic::draw();
 }
 
 //--------------------------------------------------------------
 void ofApp::exit(){
-    delete p;
+    Ballistic::exit();
 }
 
 //--------------------------------------------------------------
