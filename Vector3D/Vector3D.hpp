@@ -7,7 +7,7 @@
 
 #ifndef Vector3D_hpp
 #define Vector3D_hpp
-
+#include <string>
 class Vector3D {
 
 private:
@@ -42,12 +42,17 @@ public:
     Vector3D& operator*=(const Vector3D& other);
     
     // Sum
-    Vector3D operator+(const Vector3D& other) const;
+    Vector3D operator+(const Vector3D& a) const;
     Vector3D& operator+=(const Vector3D& other);
     
     // Subtraction
     Vector3D operator-(const Vector3D& other) const;
     Vector3D& operator-=(const Vector3D& other);
+
+
+    bool operator==(const Vector3D& a) const {
+        return m_x == a.x() && m_y == a.y() && m_z == a.z();
+    }
     
     // Dot product (produit scalaire)
     float dot(const Vector3D& other) const;
