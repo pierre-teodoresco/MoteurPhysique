@@ -1,16 +1,35 @@
 #include "Ballistic.hpp"
 #include "Particle/Particle.hpp"
 #include "ofMain.h"
+#include "Vector3D/Vector3D.hpp"
 
 #include <vector>
 #include <array>
 #include <memory>
+#include <string>
 
 std::unique_ptr<Particle> p;
 
 std::vector<Vector3D> trajectory;
 bool isParticleCreated = false;    // Drapeau pour savoir si une particule a été créée
 char selectedParticleType = '\0';  // Stocke le type de particule sélectionné, mais non encore créé
+
+// private function
+std::string getParticleName(char type) {
+    switch (type) {
+        case 'b':  // Boulet de canon
+            return "Canonnball";
+
+        case 'f':  // Ballon de foot
+            return "Football";
+
+        case 'p':  // Balle de ping-pong
+            return "Ping-pong ball";
+            
+        default:
+            return "None";
+    }
+}
 
 void Ballistic::setup() {
     ofShowCursor();
@@ -50,6 +69,12 @@ void Ballistic::draw() {
     info += "P: Ping-pong ball (Mass: 0.0027 kg)\n";
 
     ofDrawBitmapString(info, windowWidth - marginRight - 200, marginTop);  // Position à droite
+    
+    // Afficher le type de particule
+    std::string particleName = "Selected : " + getParticleName(selectedParticleType);
+    int textWidth = 8 * particleName.length();  // Estimation de la largeur du texte (chaque caractère fait environ 8px)
+    marginRight = (windowWidth - textWidth) / 2;
+    ofDrawBitmapString(particleName, marginRight, marginTop);
 
     if (isParticleCreated) {
         // Dessiner la trajectoire
