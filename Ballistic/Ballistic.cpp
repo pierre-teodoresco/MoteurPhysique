@@ -1,6 +1,7 @@
 #include "Ballistic.hpp"
 #include "Particle/Particle.hpp"
 #include "ofMain.h"
+#include "Vector3D/Vector3D.hpp"
 
 #include <vector>
 #include <array>
