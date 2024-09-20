@@ -10,8 +10,8 @@
 #include <stdexcept>
 #include <array>
 
-float currentRadius;
-std::array<int, 3> currentColor;
+float currentRadius; //Rayon de la particule
+std::array<int, 3> currentColor; //Couleur de la particule
 
 /* CONSTRUCTORS */
 Particle::Particle(const Vector3D& position, const Vector3D& velocity, float mass, int red, int green, int blue, float radius)
