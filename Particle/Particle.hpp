@@ -20,9 +20,10 @@ private:
 
     float m_inverseMass;   // Inverse of the mass (useful to avoid division)
     
+
 public:
     /* CONSTRUCTORS */
-    Particle(const Vector3D& position, const Vector3D& velocity, float mass);
+    Particle(const Vector3D& position, const Vector3D& velocity, float mass, int red, int green, int blue, float radius);
     
     /* DESTRUCTOR */
     ~Particle() = default;
@@ -52,7 +53,7 @@ public:
     void clearForces();
     
     /* OPEN FRAMEWORK */
-    void draw(float radius) const;
+    void draw() const;
 };
 
 #endif /* Particle_hpp */

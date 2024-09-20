@@ -7,8 +7,7 @@
 #include <memory>
 
 std::unique_ptr<Particle> p;
-float currentRadius;
-std::array<int, 3> currentColor;
+
 std::vector<Vector3D> trajectory;
 bool isParticleCreated = false;    // Drapeau pour savoir si une particule a été créée
 char selectedParticleType = '\0';  // Stocke le type de particule sélectionné, mais non encore créé
@@ -59,8 +58,7 @@ void Ballistic::draw() {
         }
 
         // Dessiner la particule avec la couleur actuelle
-        ofSetColor(currentColor[0], currentColor[1], currentColor[2]);
-        p->draw(currentRadius);
+        p->draw();
     }
 }
 
@@ -87,21 +85,15 @@ void Ballistic::mousePressed(int x, int y) {
         // Créer la particule à partir du coin inférieur gauche avec le vecteur de vélocité calculé
         switch (selectedParticleType) {
             case 'b':  // Boulet de canon
-                p = std::make_unique<Particle>(pos, velocity, 3.92f);  // Masse d'un boulet de canon (~3.92 kg)
-                currentRadius = 30;
-                currentColor = {199, 45, 40};  // Rouge
+                p = std::make_unique<Particle>(pos, velocity, 3.92f, 199, 45, 40, 30.0);  // Masse d'un boulet de canon (~3.92 kg)
                 break;
 
             case 'f':  // Ballon de foot
-                p = std::make_unique<Particle>(pos, velocity, 0.43f);  // Masse du ballon de foot (~0.43 kg)
-                currentRadius = 25;
-                currentColor = {255, 255, 0};  // Jaune
+                p = std::make_unique<Particle>(pos, velocity, 0.43f, 255, 255, 0, 25.0);  // Masse du ballon de foot (~0.43 kg)
                 break;
 
             case 'p':  // Balle de ping-pong
-                p = std::make_unique<Particle>(pos, velocity, 0.0027f);  // Masse de la balle de ping-pong (~0.0027 kg)
-                currentRadius = 10;
-                currentColor = {255, 255, 255};  // Blanc
+                p = std::make_unique<Particle>(pos, velocity, 0.0027f, 255, 255, 255, 10.0);  // Masse de la balle de ping-pong (~0.0027 kg)
                 break;
         }
 

@@ -8,11 +8,16 @@
 #include "Particle.hpp"
 
 #include <stdexcept>
+#include <array>
+
+float currentRadius;
+std::array<int, 3> currentColor;
 
 /* CONSTRUCTORS */
-Particle::Particle(const Vector3D& position, const Vector3D& velocity, float mass)
-    : m_position(position), m_velocity(velocity), m_forceAccum(0, 0, 0), m_acceleration(0, 0, 0) {
+Particle::Particle(const Vector3D& position, const Vector3D& velocity, float mass, int red, int green, int blue, float radius)
+    : m_position(position), m_velocity(velocity), m_forceAccum(0, 0, 0), m_acceleration(0, 0, 0){
     setMass(mass); // Initialize mass (or inverse mass) here
+    currentColor = { red, green, blue };
 }
 
 /* SETTERS */
@@ -73,6 +78,7 @@ void Particle::clearForces() {
 
 #include "ofMain.h"
 
-void Particle::draw(float radius) const {
-    ofDrawCircle(m_position.v2(), radius);
+void Particle::draw() const {
+    ofSetColor(currentColor[0], currentColor[1], currentColor[2]);
+    ofDrawCircle(m_position.v2(), 30);
 }
