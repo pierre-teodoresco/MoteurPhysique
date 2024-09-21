@@ -82,7 +82,7 @@ void Ballistic::draw() {
     if (isParticleCreated) {
         // Dessiner la trajectoire
         for (const auto& pos : trajectory) {
-            ofDrawCircle(pos.v2(), 2);
+            ofDrawCircle(pos.v3(), 2);
         }
 
         for (Particle* p : particles)
@@ -109,7 +109,7 @@ void Ballistic::mousePressed(int x, int y) {
     if (selectedParticleType != '\0') {
         // Calculer le vecteur de vélocité basé sur le clic
         int windowHeight = ofGetHeight();
-        Vector3D pos(0.f, windowHeight, 0.f);  // Coin inférieur gauche
+        Vector3D pos(0.f, windowHeight, -100.f);  // Coin inférieur gauche
         Vector3D clickPos(x, y, 0.f);  // Position du clic de la souris
 
         // Calculer le vecteur de vélocité initiale

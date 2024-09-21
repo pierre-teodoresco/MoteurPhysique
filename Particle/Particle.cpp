@@ -18,6 +18,7 @@ Particle::Particle(const Vector3D& position, const Vector3D& velocity, float mas
     : m_position(position), m_velocity(velocity), m_forceAccum(0, 0, 0), m_acceleration(0, 0, 0){
     setMass(mass); // Initialize mass (or inverse mass) here
     currentColor = { red, green, blue };
+    currentRadius = radius;
 }
 
 /* SETTERS */
@@ -80,5 +81,5 @@ void Particle::clearForces() {
 
 void Particle::draw() const {
     ofSetColor(currentColor[0], currentColor[1], currentColor[2]);
-    ofDrawCircle(m_position.v2(), currentRadius);
+    ofDrawCircle(m_position.v3(), 30);
 }
