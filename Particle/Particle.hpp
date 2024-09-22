@@ -9,6 +9,7 @@
 #define Particle_hpp
 
 #include "Vector3D/Vector3D.hpp"
+#include <array>
 
 class Particle {
     
@@ -20,7 +21,8 @@ private:
 
     float m_inverseMass;   // Inverse of the mass (useful to avoid division)
     
-
+    float m_currentRadius; //Rayon de la particule
+    std::array<int, 3> m_currentColor; //Couleur de la particule
 public:
     /* CONSTRUCTORS */
     Particle(const Vector3D& position, const Vector3D& velocity, float mass, int red, int green, int blue, float radius);
@@ -53,7 +55,7 @@ public:
     void clearForces();
     
     /* OPEN FRAMEWORK */
-    void draw() const;
+    void draw();
 };
 
 #endif /* Particle_hpp */
