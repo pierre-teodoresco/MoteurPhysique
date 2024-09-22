@@ -43,12 +43,12 @@ void Ballistic::update() {
         for (Particle* p : particles)
         {
             // Appliquer la gravité
-            const Vector3D gravity(0.f, 9.81f, 0.f);
+            const Vector3D gravity(0.f, 981.0f, 0.f);
             Vector3D weight = gravity * p->mass();
             p->applyForce(weight);
 
             // Intégrer avec le delta time
-            float dt = ofGetLastFrameTime() * 2.f;
+            float dt = ofGetLastFrameTime();
             p->integrate(dt);
         }
     }
@@ -113,7 +113,7 @@ void Ballistic::mousePressed(int x, int y) {
         Vector3D clickPos(x, y, 0.f);  // Position du clic de la souris
 
         // Calculer le vecteur de vélocité initiale
-        Vector3D velocity = (clickPos - pos) / 5;
+        Vector3D velocity = (clickPos - pos) * 1.5f;
 
         // Créer la particule à partir du coin inférieur gauche avec le vecteur de vélocité calculé
         switch (selectedParticleType) {
