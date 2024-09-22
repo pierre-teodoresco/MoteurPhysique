@@ -81,5 +81,5 @@ void Particle::clearForces() {
 
 void Particle::draw() const {
     ofSetColor(currentColor[0], currentColor[1], currentColor[2]);
-    ofDrawCircle(m_position.v3(), 30);
+    ofDrawCircle(m_position.v3(), currentRadius);
 }
