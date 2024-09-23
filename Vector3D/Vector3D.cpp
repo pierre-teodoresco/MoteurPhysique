@@ -6,27 +6,21 @@
 //
 
 #include "Vector3D.hpp"
+
 #include <cmath>
+#include <stdexcept>
 
 /* CONSTRUCTORS */
 Vector3D::Vector3D(float x, float y, float z): m_x(x), m_y(y), m_z(z) {}
 
-/* DESTRUCTOR */
-Vector3D::~Vector3D() {}
-
 /* GETTERS */
-
-// Attributes
-inline float Vector3D::x() const { return m_x; }
-inline float Vector3D::y() const { return m_y; }
-inline float Vector3D::z() const { return m_z; }
 
 // Computed values
 float Vector3D::norm() const {
     return sqrt(squaredNorm());
 }
 
-inline float Vector3D::squaredNorm() const {
+float Vector3D::squaredNorm() const {
     return m_x*m_x + m_y*m_y + m_z*m_z;
 }
 
@@ -45,6 +39,25 @@ Vector3D& Vector3D::operator*=(float scalar) {
     return *this;
 }
 
+// Scalar division (retourne un nouveau vecteur)
+Vector3D Vector3D::operator/(float scalar) const {
+    if (scalar == 0.0f) {
+        throw std::runtime_error("Division by zero is undefined.");
+    }
+    return {m_x / scalar, m_y / scalar, m_z / scalar};
+}
+
+// Scalar division in place (modifie le vecteur actuel)
+Vector3D& Vector3D::operator/=(float scalar) {
+    if (scalar == 0.0f) {
+        throw std::runtime_error("Division by zero is undefined.");
+    }
+    m_x /= scalar;
+    m_y /= scalar;
+    m_z /= scalar;
+    return *this;
+}
+
 // Cross product (produit vectoriel)
 Vector3D Vector3D::operator*(const Vector3D& other) const {
     return {
@@ -55,9 +68,12 @@ Vector3D Vector3D::operator*(const Vector3D& other) const {
 }
 
 Vector3D& Vector3D::operator*=(const Vector3D& other) {
-    m_x = m_y * other.z() - m_z * other.y();
-    m_y = m_z * other.x() - m_x * other.z();
-    m_z = m_x * other.y() - m_y * other.x();
+    // keep track of current components
+    float oldX = m_x, oldY = m_y, oldZ = m_z;
+    
+    m_x = oldY * other.z() - oldZ * other.y();
+    m_y = oldZ * other.x() - oldX * other.z();
+    m_z = oldX * other.y() - oldY * other.x();
     return *this;
 }
 
@@ -102,11 +118,21 @@ Vector3D Vector3D::normalize() const {
     return {m_x / normValue, m_y / normValue, m_z / normValue};
 }
 
-void Vector3D::normalize() {
+void Vector3D::normalizeInPlace() {
     float normValue = norm();
     if (normValue != 0) {
         m_x /= normValue;
         m_y /= normValue;
         m_z /= normValue;
     }
+}
+
+/* OPEN FRAMEWORK */
+
+glm::vec2 Vector3D::v2() const {
+    return glm::vec2(m_x, m_y);
+}
+
+glm::vec3 Vector3D::v3() const {
+    return glm::vec3(m_x, m_y, m_z);
 }

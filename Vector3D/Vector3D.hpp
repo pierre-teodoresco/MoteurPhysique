@@ -8,6 +8,10 @@
 #ifndef Vector3D_hpp
 #define Vector3D_hpp
 
+#include "glm/vec2.hpp"
+#include "glm/vec3.hpp"
+
+#include <string>
 class Vector3D {
 
 private:
@@ -18,14 +22,14 @@ public:
     Vector3D(float x = 0.f, float y = 0.f, float z = 0.f);
     
     /* DESTRUCTOR */
-    ~Vector3D();
+    ~Vector3D() = default;
     
     /* GETTERS */
     
     // Attributes
-    float x() const;
-    float y() const;
-    float z() const;
+    inline float x() const { return m_x; }
+    inline float y() const { return m_y; }
+    inline float z() const { return m_z; }
     
     // Computed values
     float norm() const;
@@ -37,17 +41,26 @@ public:
     Vector3D operator*(float scalar) const;
     Vector3D& operator*=(float other);
     
+    // Scalar division
+    Vector3D operator/(float scalar) const;
+    Vector3D& operator/=(float other);
+    
     // Cross product (produit vectoriel)
     Vector3D operator*(const Vector3D& other) const;
     Vector3D& operator*=(const Vector3D& other);
     
     // Sum
-    Vector3D operator+(const Vector3D& other) const;
+    Vector3D operator+(const Vector3D& a) const;
     Vector3D& operator+=(const Vector3D& other);
     
     // Subtraction
     Vector3D operator-(const Vector3D& other) const;
     Vector3D& operator-=(const Vector3D& other);
+
+
+    bool operator==(const Vector3D& a) const {
+        return m_x == a.x() && m_y == a.y() && m_z == a.z();
+    }
     
     // Dot product (produit scalaire)
     float dot(const Vector3D& other) const;
@@ -57,7 +70,12 @@ public:
     
     // Normalization
     Vector3D normalize() const;
-    void normalize();
+    void normalizeInPlace();
+    
+    /* OPEN FRAMEWORK */
+    glm::vec2 v2() const;
+    glm::vec3 v3() const;
+    
 };
 
 #endif /* Vector3D_hpp */

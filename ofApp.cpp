@@ -1,28 +1,32 @@
 #include "ofApp.h"
 
+#include "Ballistic/Ballistic.hpp"
+
 //--------------------------------------------------------------
 void ofApp::setup(){
-
+    Ballistic::setup();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+    Ballistic::update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
+    Ballistic::draw();
 }
 
 //--------------------------------------------------------------
 void ofApp::exit(){
-
+    Ballistic::exit();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    if (key == 'b' || key == 'f' || key == 'p') {
+        Ballistic::createParticle(key);
+    }
 }
 
 //--------------------------------------------------------------
@@ -42,7 +46,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+    Ballistic::mousePressed(x, y);
 }
 
 //--------------------------------------------------------------
