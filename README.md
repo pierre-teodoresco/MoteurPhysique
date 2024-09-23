@@ -19,6 +19,7 @@ Pour ce faire il faut utiliser les touches du clavier précisées à l'écran :
 * **B** : pour un boulet de canon
 * **F** : pour un ballon de football
 * **P** : pour une balle de ping-pong
+
 Quand une particule est sélectionée, son nom est affiché à côté de la mention **Selected**.
 Une fois l'étape de sélection terminée, il suffit de cliquer avec sa souris pour choisir une vélocité initiale.
 Le simulateur utilise le vecteur entre le coin inférieur gauche et l'emplacement du clique pour définir ce vecteur de vélocité initiale.
