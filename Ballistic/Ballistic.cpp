@@ -5,7 +5,6 @@
 
 #include <vector>
 #include <array>
-#include <memory>
 #include <string>
 
 std::vector<Particle*> particles; //Liste des particules gérées par cette classe
