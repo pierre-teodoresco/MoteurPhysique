@@ -14,17 +14,18 @@
 class Particle {
     
 private:
-    Vector3D m_position;  // Particle's position
-    Vector3D m_velocity;  // Particle's velocity
+    Vector3D m_position;
+    Vector3D m_velocity;
     Vector3D m_acceleration; // Acceleration resulting from applied forces
     Vector3D m_forceAccum;  // Accumulated forces
 
     float m_inverseMass;   // Inverse of the mass (useful to avoid division)
     
-    float m_currentRadius; //Rayon de la particule
-    std::array<int, 3> m_currentColor; //Couleur de la particule
+    float m_radius;
+    std::array<int, 3> m_color;
 public:
     /* CONSTRUCTORS */
+    Particle(const Vector3D& position, const Vector3D& velocity, float mass, float radius);
     Particle(const Vector3D& position, const Vector3D& velocity, float mass, int red, int green, int blue, float radius);
     
     /* DESTRUCTOR */

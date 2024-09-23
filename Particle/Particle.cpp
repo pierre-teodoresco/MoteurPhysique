@@ -9,14 +9,16 @@
 
 #include <stdexcept>
 
-
-
 /* CONSTRUCTORS */
+Particle::Particle(const Vector3D& position, const Vector3D& velocity, float mass, float radius) {
+    Particle(position, velocity, mass, 255, 255, 255, radius);
+}
+
 Particle::Particle(const Vector3D& position, const Vector3D& velocity, float mass, int red, int green, int blue, float radius)
-    : m_position(position), m_velocity(velocity), m_forceAccum(0, 0, 0), m_acceleration(0, 0, 0){
+    : m_position(position), m_velocity(velocity), m_forceAccum(0, 0, 0), m_acceleration(0, 0, 0) {
     setMass(mass); // Initialize mass (or inverse mass) here
-    m_currentColor = { red, green, blue };
-    m_currentRadius = radius;
+    m_color = { red, green, blue };
+    m_radius = radius;
 }
 
 /* SETTERS */
@@ -24,7 +26,7 @@ Particle::Particle(const Vector3D& position, const Vector3D& velocity, float mas
 // Get Mass
 float Particle::mass() const {
     if (m_inverseMass == 0.0f) {
-        throw std::runtime_error("Mass can't be null");
+        throw std::runtime_error("Mass of a static particle is infinite");
     }
     return 1.f / m_inverseMass;
 }
@@ -78,6 +80,6 @@ void Particle::clearForces() {
 #include "ofMain.h"
 
 void Particle::draw() {
-    ofSetColor(m_currentColor[0], m_currentColor[1], m_currentColor[2]);
-    ofDrawCircle(m_position.v3(), m_currentRadius);
+    ofSetColor(m_color[0], m_color[1], m_color[2]);
+    ofDrawCircle(m_position.v3(), m_radius);
 }
