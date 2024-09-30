@@ -57,10 +57,10 @@ void Ballistic::update() {
             
             // Intégrer avec le delta time
             p->integrate(dt);
-            
-            // Nettoyer le registre
-            forceRegistry.clear();
         }
+        
+        // Nettoyer le registre
+        forceRegistry.clear();
     }
 }
 
