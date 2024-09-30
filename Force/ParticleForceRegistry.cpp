@@ -13,8 +13,7 @@ ParticleForceRegistry::ParticleForceRegistry() {
 }
 
 void ParticleForceRegistry::add(std::shared_ptr<Particle> particle, std::shared_ptr<ParticleForceGenerator> forceGenerator) {
-    ParticleForceRegistration newForce = ParticleForceRegistration { particle, forceGenerator };
-    m_registry.push_back(newForce);
+    m_registry.push_back({ particle, forceGenerator });
 }
 
 void ParticleForceRegistry::remove(std::shared_ptr<Particle> particle, std::shared_ptr<ParticleForceGenerator> forceGenerator) {
