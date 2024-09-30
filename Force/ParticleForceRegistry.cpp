@@ -5,7 +5,7 @@
 //  Created by Pierre Teodoresco on 30/09/2024.
 //
 
-#include "ParticleForceRegistry.hpp"
+#include "Force/ParticleForceRegistry.hpp"
 
 ParticleForceRegistry::ParticleForceRegistry() {
     // Réserver 3 registrations pour optimiser. La valeur 3 est arbitraire et a modifiée si les besoins sont différents
@@ -13,8 +13,7 @@ ParticleForceRegistry::ParticleForceRegistry() {
 }
 
 void ParticleForceRegistry::add(std::shared_ptr<Particle> particle, std::shared_ptr<ParticleForceGenerator> forceGenerator) {
-    ParticleForceRegistration newForce = ParticleForceRegistration { particle, forceGenerator };
-    m_registry.push_back(newForce);
+    m_registry.push_back({ particle, forceGenerator });
 }
 
 void ParticleForceRegistry::remove(std::shared_ptr<Particle> particle, std::shared_ptr<ParticleForceGenerator> forceGenerator) {

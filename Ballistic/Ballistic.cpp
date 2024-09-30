@@ -2,16 +2,20 @@
 #include "Particle/Particle.hpp"
 #include "ofMain.h"
 #include "Vector3D/Vector3D.hpp"
+#include "Force/ParticleForceGenerator.hpp"
+#include "Force/ParticleForceRegistry.hpp"
 #include "Force/Gravity/ParticleGravity.hpp"
 
 #include <vector>
 #include <array>
 #include <string>
+#include <memory>
 
 std::vector<std::shared_ptr<Particle>> particles; //Liste des particules gérées par cette classe
 std::vector<Vector3D> trajectory; //Liste des positions représentant la trajectoire de la dernière particule créée
 bool isParticleCreated = false;    // Drapeau pour savoir si une particule a été créée
 char selectedParticleType = '\0';  // Stocke le type de particule sélectionné, mais non encore créé
+ParticleForceRegistry forceRegistry;
 
 // private function
 std::string getParticleName(char type) {
@@ -38,19 +42,26 @@ void Ballistic::update() {
     if (isParticleCreated) {
         // Garder trace des anciennes positions
         trajectory.push_back(particles.back()->position());
+        
+        // Récupérer la durée de la dernière frame
+        float dt = ofGetLastFrameTime();
 
         //Iteration à travers toutes les particules
         for (auto p : particles)
         {
-            // Appliquer la gravité
-            ParticleGravity gravity;
-            float duration = 0.f; // Inutilisé
-            gravity.updateForce(p, duration);
-
+            // Créer les forces (ici uniquement la gravité) et les ajouter au registre
+            auto gravity = std::make_shared<ParticleGravity>();
+            forceRegistry.add(p, gravity);
+            
+            // Appliquer les forces du registre
+            forceRegistry.updateForces(dt);
+            
             // Intégrer avec le delta time
-            float dt = ofGetLastFrameTime();
             p->integrate(dt);
         }
+        
+        // Nettoyer le registre
+        forceRegistry.clear();
     }
 }
 
