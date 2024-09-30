@@ -45,7 +45,7 @@ public:
     void setMass(float mass);
     
     // Force accumulator
-    void applyForce(const Vector3D& force);
+    void addForce(const Vector3D& force);
     
     /* INTEGRATORS */
     

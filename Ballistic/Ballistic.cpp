@@ -2,12 +2,13 @@
 #include "Particle/Particle.hpp"
 #include "ofMain.h"
 #include "Vector3D/Vector3D.hpp"
+#include "Force/Gravity/ParticleGravity.hpp"
 
 #include <vector>
 #include <array>
 #include <string>
 
-std::vector<Particle*> particles; //Liste des particules gérées par cette classe
+std::vector<std::shared_ptr<Particle>> particles; //Liste des particules gérées par cette classe
 std::vector<Vector3D> trajectory; //Liste des positions représentant la trajectoire de la dernière particule créée
 bool isParticleCreated = false;    // Drapeau pour savoir si une particule a été créée
 char selectedParticleType = '\0';  // Stocke le type de particule sélectionné, mais non encore créé
@@ -39,12 +40,12 @@ void Ballistic::update() {
         trajectory.push_back(particles.back()->position());
 
         //Iteration à travers toutes les particules
-        for (Particle* p : particles)
+        for (auto p : particles)
         {
             // Appliquer la gravité
-            const Vector3D gravity(0.f, 981.0f, 0.f);
-            Vector3D weight = gravity * p->mass();
-            p->applyForce(weight);
+            ParticleGravity gravity;
+            float duration = 0.f; // Inutilisé
+            gravity.updateForce(p, duration);
 
             // Intégrer avec le delta time
             float dt = ofGetLastFrameTime();
@@ -84,7 +85,7 @@ void Ballistic::draw() {
             ofDrawCircle(pos.v3(), 2);
         }
 
-        for (Particle* p : particles)
+        for (auto p : particles)
         {
             p->draw();
         }
@@ -92,10 +93,7 @@ void Ballistic::draw() {
 }
 
 void Ballistic::exit() {
-    for (Particle* p : particles)
-    {
-        delete p;  // Libérer la mémoire
-    }
+    // Inutile avec des shared_ptr
 }
 
 void Ballistic::createParticle(char type) {
@@ -117,15 +115,15 @@ void Ballistic::mousePressed(int x, int y) {
         // Créer la particule à partir du coin inférieur gauche avec le vecteur de vélocité calculé
         switch (selectedParticleType) {
             case 'b':  // Boulet de canon
-                particles.push_back(new Particle(pos, velocity, 3.92f, 199, 45, 40, 30.0));
+                particles.push_back(std::make_shared<Particle>(pos, velocity, 3.92f, 199, 45, 40, 30.0));
                 break;
 
             case 'f':  // Ballon de foot
-                particles.push_back(new Particle(pos, velocity, 0.43f, 255, 255, 0, 25.0));
+                particles.push_back(std::make_shared<Particle>(pos, velocity, 0.43f, 255, 255, 0, 25.0));
                 break;
 
             case 'p':  // Balle de ping-pong
-                particles.push_back(new Particle(pos, velocity, 0.0027f, 255, 255, 255, 10.0));
+                particles.push_back(std::make_shared<Particle>(pos, velocity, 0.0027f, 255, 255, 255, 10.0));
                 break;
         }
 
