@@ -5,7 +5,8 @@
 //  Created by Pierre Teodoresco on 30/09/2024.
 //
 
-#include "ParticleGravity.hpp"
+#include "Force/Gravity/ParticleGravity.hpp"
+#include "Particle/Particle.hpp"
 
 #include <stdexcept>
 
