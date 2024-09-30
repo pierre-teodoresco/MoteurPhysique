@@ -16,7 +16,7 @@
 class ParticleGravity : public ParticleForceGenerator {
     
 private:
-    Vector3D gravity;
+    Vector3D m_gravity;
     
 public:
     ParticleGravity(const Vector3D& gravity = Vector3D(0.f, 981.f, 0.f));

@@ -44,7 +44,7 @@ void Ballistic::update() {
             // Appliquer la gravité
             const Vector3D gravity(0.f, 981.0f, 0.f);
             Vector3D weight = gravity * p->mass();
-            p->applyForce(weight);
+            p->addForce(weight);
 
             // Intégrer avec le delta time
             float dt = ofGetLastFrameTime();
