@@ -22,7 +22,7 @@ private:
 public:
     ParticleGravity(const Vector3D& gravity = Vector3D(0.f, 981.f, 0.f));
     
-    virtual void updateForce(std::shared_ptr<Particle> particle, float duration);
+    virtual void updateForce(std::shared_ptr<Particle> particle, float duration) override;
 };
 
 #endif /* ParticleGravity_hpp */
