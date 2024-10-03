@@ -11,6 +11,8 @@
 
 // Calcul de la force normale : N = m * g
 float computeNormalForce(const std::shared_ptr<Particle>& particle, float gravity) {
+    // Dans un cas où le sol est plat
+    // La force normale dépend de l'inclinaison du sol
     return particle->mass() * gravity;
 }
 
