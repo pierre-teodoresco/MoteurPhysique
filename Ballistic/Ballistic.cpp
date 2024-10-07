@@ -15,7 +15,10 @@ std::vector<std::shared_ptr<Particle>> particles; //Liste des particules gérée
 std::vector<Vector3D> trajectory; //Liste des positions représentant la trajectoire de la dernière particule créée
 bool isParticleCreated = false;    // Drapeau pour savoir si une particule a été créée
 char selectedParticleType = '\0';  // Stocke le type de particule sélectionné, mais non encore créé
+
+/* FORCES */
 ParticleForceRegistry forceRegistry;
+auto gravity = std::make_shared<ParticleGravity>();
 
 // private function
 std::string getParticleName(char type) {
@@ -50,7 +53,6 @@ void Ballistic::update() {
         for (auto p : particles)
         {
             // Créer les forces (ici uniquement la gravité) et les ajouter au registre
-            auto gravity = std::make_shared<ParticleGravity>();
             forceRegistry.add(p, gravity);
             
             // Appliquer les forces du registre
