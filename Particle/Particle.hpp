@@ -21,6 +21,7 @@ private:
     Vector3D m_veloAccum;  // Accumulated velocity
     Vector3D m_dispAccum; // Accumulated displacement
 
+    float m_mass;
     float m_inverseMass;   // Inverse of the mass (useful to avoid division)
     
     float m_radius;

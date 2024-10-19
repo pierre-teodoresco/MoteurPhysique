@@ -46,7 +46,10 @@ void Ballistic::update() {
         // Récupérer la durée de la dernière frame
         float dt = ofGetLastFrameTime();
 
-        //Iteration à travers toutes les particules
+        // Détection des collisions existantes durant cette frame
+        detectCollisions();
+
+        // Application de la gravité
         for (auto p : particles)
         {
             // Créer les forces (ici uniquement la gravité) et les ajouter au registre
@@ -62,6 +65,39 @@ void Ballistic::update() {
         
         // Nettoyer le registre
         forceRegistry.clear();
+    }
+}
+
+void Ballistic::detectCollisions() {
+    //Itération à travers chaque paire de particules
+    for (int i = 0; i < particles.size(); i++)
+    {
+        std::shared_ptr<Particle> particleA = particles.at(i);
+        for (int j = i+1; j < particles.size(); j++)
+        {
+            std::shared_ptr<Particle> particleB = particles.at(j);
+            
+            //Calculer le vecteur distance entre les deux particules
+            Vector3D dist = particleA->position() - particleB->position();                                
+            
+            //Si la distance est inférieure à la somme de leurs rayons, il ya collision
+            if (dist.norm() < (particleA->radius() + particleB->radius()))        
+            {
+                //Calculer de combien elles se pénètrent l'une l'autre
+                //puis réduire le vecteur distance à cette taille
+                float penetration = dist.norm() - (particleA->radius() + particleB->radius());
+                Vector3D normal = dist.normalize();
+                Vector3D displacement = normal * penetration;
+
+                //Calculer un nouveau vecteur "unitaire" représentant le déplacement par unité de masse 
+                //pour éviter de devoir faire plusieurs divisions
+                Vector3D dispPerMass = displacement / (particleA->mass() + particleB->mass());
+
+                //Enfin, appliquer à chaque particule sa "part" du déplacement, basée sur la masse de l'autre
+                particleA->addDisplacement(dispPerMass * (particleB->mass() * -1.0f));
+                particleB->addDisplacement(dispPerMass * particleA->mass());
+            }
+        }
     }
 }
 

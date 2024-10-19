@@ -25,14 +25,12 @@ Particle::Particle(const Vector3D& position, const Vector3D& velocity, float mas
 
 // Get Mass
 float Particle::mass() const {
-    if (m_inverseMass == 0.0f) {
-        throw std::runtime_error("Mass of a static particle is infinite");
-    }
-    return 1.f / m_inverseMass;
+    return m_mass;
 }
 
 // Set inverse mass
 void Particle::setInverseMass(float inverseMass) {
+    m_mass = 1.0f / inverseMass;
     m_inverseMass = inverseMass;
 }
 
@@ -41,6 +39,7 @@ void Particle::setMass(float mass) {
     if (mass == 0.0f) {
         throw std::runtime_error("Mass can't be null");
     }
+    m_mass = mass;
     m_inverseMass = 1.0f / mass;
 }
 
