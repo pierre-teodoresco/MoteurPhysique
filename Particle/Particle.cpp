@@ -15,7 +15,7 @@ Particle::Particle(const Vector3D& position, const Vector3D& velocity, float mas
 }
 
 Particle::Particle(const Vector3D& position, const Vector3D& velocity, float mass, int red, int green, int blue, float radius)
-    : m_position(position), m_velocity(velocity), m_forceAccum(0, 0, 0), m_acceleration(0, 0, 0) {
+    : m_position(position), m_velocity(velocity), m_forceAccum(0, 0, 0), m_veloAccum(0, 0, 0), m_dispAccum(0, 0, 0), m_acceleration(0, 0, 0) {
     setMass(mass); // Initialize mass (or inverse mass) here
     m_color = { red, green, blue };
     m_radius = radius;
@@ -44,11 +44,24 @@ void Particle::setMass(float mass) {
     m_inverseMass = 1.0f / mass;
 }
 
+// Get Radius
+float Particle::radius() const {
+    return m_radius;
+}
+
 /* FORCE ACCUMULATOR */
 
 // Add a force to the particle
 void Particle::applyForce(const Vector3D& force) {
     m_forceAccum += force;
+}
+
+void Particle::applyVelocity(const Vector3D& velo) {
+    m_veloAccum += velo;
+}
+
+void Particle::applyDisplacement(const Vector3D& disp) {
+    m_dispAccum += disp;
 }
 
 /* INTEGRATOR */
@@ -57,12 +70,16 @@ void Particle::applyForce(const Vector3D& force) {
 void Particle::integrate(float dt) {
     if (m_inverseMass <= 0.0f) return; // If the particle has infinite mass, do not move it
 
+    // Update position using accumulated displacement
+    m_position += m_dispAccum;
     // Update position using velocity
     m_position += m_velocity * dt;
     
     // Calculate acceleration from the accumulated force
     m_acceleration = m_forceAccum * m_inverseMass;
     
+    // Update velocity using accumulated velocity
+    m_velocity += m_veloAccum;
     // Update velocity using acceleration
     m_velocity += m_acceleration * dt;
     
@@ -73,6 +90,8 @@ void Particle::integrate(float dt) {
 // Reset the force accumulator
 void Particle::clearForces() {
     m_forceAccum = Vector3D(0, 0, 0);
+    m_veloAccum = Vector3D(0, 0, 0);
+    m_dispAccum = Vector3D(0, 0, 0);
 }
 
 /* OPEN FRAMEWORK */

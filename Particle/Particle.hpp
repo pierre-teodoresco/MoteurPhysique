@@ -18,6 +18,8 @@ private:
     Vector3D m_velocity;
     Vector3D m_acceleration; // Acceleration resulting from applied forces
     Vector3D m_forceAccum;  // Accumulated forces
+    Vector3D m_veloAccum;  // Accumulated velocity
+    Vector3D m_dispAccum; // Accumulated displacement
 
     float m_inverseMass;   // Inverse of the mass (useful to avoid division)
     
@@ -44,8 +46,13 @@ public:
     float mass() const;
     void setMass(float mass);
     
-    // Force accumulator
+    // Radius
+    float radius() const;
+
+    // Accumulators
     void applyForce(const Vector3D& force);
+    void applyVelocity(const Vector3D& velo);
+    void applyDisplacement(const Vector3D& disp);
     
     /* INTEGRATORS */
     
