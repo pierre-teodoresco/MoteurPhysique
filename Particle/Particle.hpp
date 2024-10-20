@@ -26,10 +26,12 @@ private:
     
     float m_radius;
     std::array<int, 3> m_color;
+
+    bool m_isStaticObject;
 public:
     /* CONSTRUCTORS */
     Particle(const Vector3D& position, const Vector3D& velocity, float mass, float radius);
-    Particle(const Vector3D& position, const Vector3D& velocity, float mass, int red, int green, int blue, float radius);
+    Particle(const Vector3D& position, const Vector3D& velocity, float mass, int red, int green, int blue, float radius, bool isStaticObject = false);
     
     /* DESTRUCTOR */
     ~Particle() = default;
@@ -49,6 +51,9 @@ public:
 
     // Radius
     float radius() const;
+
+    // Gravity
+    bool isStaticObject() const;
 
     // Force accumulator
     void addForce(const Vector3D& force);

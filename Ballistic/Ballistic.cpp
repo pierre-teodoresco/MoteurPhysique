@@ -11,6 +11,7 @@
 #include <array>
 #include <string>
 #include <memory>
+#include <limits>
 
 std::vector<std::shared_ptr<Particle>> particles; //Liste des particules gérées par cette classe
 std::vector<Vector3D> trajectory; //Liste des positions représentant la trajectoire de la dernière particule créée
@@ -41,10 +42,12 @@ std::string getParticleName(char type) {
 
 void Ballistic::setup() {
     ofShowCursor();
+    particles.push_back(std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, ofGetHeight()*50, 0), Vector3D(), std::numeric_limits<float>::max(), 255, 255, 255, ofGetHeight()*49, true));
+    isParticleCreated = true;
 }
 
 void Ballistic::update() {
-    if (isParticleCreated) {
+    if (particles.size() > 0) {
         // Garder trace des anciennes positions
         trajectory.push_back(particles.back()->position());
         
@@ -125,7 +128,7 @@ void Ballistic::mousePressed(int x, int y) {
     if (selectedParticleType != '\0') {
         // Calculer le vecteur de vélocité basé sur le clic
         int windowHeight = ofGetHeight();
-        Vector3D pos(0.f, windowHeight, 0.f);  // Coin inférieur gauche
+        Vector3D pos(0.f, windowHeight-30, 0.f);  // Coin inférieur gauche
         Vector3D clickPos(x, y, 0.f);  // Position du clic de la souris
 
         // Calculer le vecteur de vélocité initiale
@@ -134,15 +137,15 @@ void Ballistic::mousePressed(int x, int y) {
         // Créer la particule à partir du coin inférieur gauche avec le vecteur de vélocité calculé
         switch (selectedParticleType) {
             case 'b':  // Boulet de canon
-                particles.push_back(std::make_shared<Particle>(pos, velocity, 3.92f, 199, 45, 40, 30.0));
+                particles.push_back(std::make_shared<Particle>(pos, velocity, 3.92f, 199, 45, 40, 30.0, false));
                 break;
 
             case 'f':  // Ballon de foot
-                particles.push_back(std::make_shared<Particle>(pos, velocity, 0.43f, 255, 255, 0, 25.0));
+                particles.push_back(std::make_shared<Particle>(pos, velocity, 0.43f, 255, 255, 0, 25.0, false));
                 break;
 
             case 'p':  // Balle de ping-pong
-                particles.push_back(std::make_shared<Particle>(pos, velocity, 0.0027f, 255, 255, 255, 10.0));
+                particles.push_back(std::make_shared<Particle>(pos, velocity, 0.0027f, 255, 255, 255, 10.0, false));
                 break;
         }
 

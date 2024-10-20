@@ -11,14 +11,15 @@
 
 /* CONSTRUCTORS */
 Particle::Particle(const Vector3D& position, const Vector3D& velocity, float mass, float radius) {
-    Particle(position, velocity, mass, 255, 255, 255, radius);
+    Particle(position, velocity, mass, 255, 255, 255, radius, false);
 }
 
-Particle::Particle(const Vector3D& position, const Vector3D& velocity, float mass, int red, int green, int blue, float radius)
+Particle::Particle(const Vector3D& position, const Vector3D& velocity, float mass, int red, int green, int blue, float radius, bool isStaticObject)
     : m_position(position), m_velocity(velocity), m_forceAccum(0, 0, 0), m_veloAccum(0, 0, 0), m_dispAccum(0, 0, 0), m_acceleration(0, 0, 0) {
     setMass(mass); // Initialize mass (or inverse mass) here
     m_color = { red, green, blue };
     m_radius = radius;
+    m_isStaticObject = isStaticObject;
 }
 
 /* SETTERS */
@@ -48,6 +49,11 @@ float Particle::radius() const {
     return m_radius;
 }
 
+bool Particle::isStaticObject() const
+{
+    return m_isStaticObject;
+}
+
 /* FORCE ACCUMULATOR */
 
 // Add a force to the particle
@@ -67,7 +73,7 @@ void Particle::addDisplacement(const Vector3D& disp) {
 
 // Euler integration to update position and velocity
 void Particle::integrate(float dt) {
-    if (m_inverseMass <= 0.0f) return; // If the particle has infinite mass, do not move it
+    if (m_inverseMass <= 0.0f || m_isStaticObject) return; // If the particle has infinite mass, do not move it
 
     // Update position using accumulated displacement
     m_position += m_dispAccum;
