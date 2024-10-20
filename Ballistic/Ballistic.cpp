@@ -3,14 +3,13 @@
 #include "ofMain.h"
 #include "Collision/CollisionManager.h"
 #include "Force/Spring/Spring.h"
-#include "Force/Spring/ParticleSpring.hpp"
+#include "Force/Spring/AnchoredSpring.hpp"
 
 std::vector<std::shared_ptr<Particle>> particles; //Liste des particules gérées par cette classe
 std::vector<std::shared_ptr<Spring>> activeSprings; //Liste des particules gérées par cette classe
 std::vector<Vector3D> trajectory; //Liste des positions représentant la trajectoire de la dernière particule créée
 bool isParticleCreated = false;    // Drapeau pour savoir si une particule a été créée
 char selectedParticleType = '\0';  // Stocke le type de particule sélectionné, mais non encore créé
-int numColl = 0;
 
 /* FORCES */
 ParticleForceRegistry forceRegistry;
@@ -37,7 +36,7 @@ void Ballistic::setup() {
     particles.push_back(std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, ofGetHeight()*50, 0), Vector3D(), std::numeric_limits<float>::max(), 255, 255, 255, ofGetHeight()*49, true));
     auto p = std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, ofGetHeight() / 2 + 50, 0), Vector3D(), 3.92f, 199, 45, 40, 30.0, false);
     particles.push_back(p);
-    activeSprings.push_back(std::make_shared<ParticleSpring>(Vector3D(ofGetWidth() / 2, ofGetHeight() / 2, 0), 54.0f, 50, p));
+    activeSprings.push_back(std::make_shared<AnchoredSpring>(Vector3D(ofGetWidth() / 2, ofGetHeight() / 2, 0), 54.0f, 50, p));
     isParticleCreated = true;
 }
 
