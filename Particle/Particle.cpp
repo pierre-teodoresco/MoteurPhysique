@@ -71,8 +71,6 @@ void Particle::integrate(float dt) {
 
     // Update position using accumulated displacement
     m_position += m_dispAccum;
-    // Update position using velocity
-    m_position += m_velocity * dt;
     
     // Calculate acceleration from the accumulated force
     m_acceleration = m_forceAccum * m_inverseMass;
@@ -82,6 +80,9 @@ void Particle::integrate(float dt) {
     // Update velocity using acceleration
     m_velocity += m_acceleration * dt;
     
+    // Update position using velocity
+    m_position += m_velocity * dt;
+
     // Reset accumulated forces after integration
     clearForces();
 }
