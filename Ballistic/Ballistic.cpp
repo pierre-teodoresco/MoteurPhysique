@@ -60,12 +60,12 @@ void Ballistic::update() {
             // Créer les forces (ici uniquement la gravité) et les ajouter au registre
             forceRegistry.add(p, gravity);
             
-            // Appliquer les forces du registre
-            forceRegistry.updateForces(dt);
-            
             // Intégrer avec le delta time
             p->integrate(dt);
         }
+        
+        // Appliquer les forces du registre
+        forceRegistry.updateForces(dt);
         
         // Nettoyer le registre
         forceRegistry.clear();
