@@ -1,7 +1,11 @@
 #include "ParticleSpring.hpp"
 
-ParticleSpring::ParticleSpring(const Vector3D& anchor, float springConstant, float restLength)
-    : m_anchor(anchor), m_springConstant(springConstant), m_restLength(restLength) {}
+ParticleSpring::ParticleSpring(const Vector3D& anchor, float springConstant, float restLength, std::shared_ptr<Particle> particle)
+    : m_anchor(anchor) {
+    m_springConstant = springConstant;
+    m_restLength = restLength;
+    m_attachedParticle = particle;
+}
 
 void ParticleSpring::updateForce(std::shared_ptr<Particle> particle, float duration) {
     // Calcul de la différence de position par rapport au point d'ancrage
@@ -17,3 +21,4 @@ void ParticleSpring::updateForce(std::shared_ptr<Particle> particle, float durat
     // Application de la force à la particule
     particle->addForce(force);
 }
+

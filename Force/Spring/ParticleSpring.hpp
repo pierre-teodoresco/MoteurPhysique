@@ -1,16 +1,16 @@
 #ifndef ParticleSpring_hpp
 #define ParticleSpring_hpp
 
-#include "ParticleForceGenerator.hpp"
+#include "Force/Spring/Spring.h"
+#include "Force/ParticleForceGenerator.hpp"
 
-class ParticleSpring : public ParticleForceGenerator {
+class ParticleSpring : public Spring {
 private:
     Vector3D m_anchor;  // Point d'ancrage du ressort (position fixe)
-    float m_springConstant;  // Constante de raideur k
-    float m_restLength;      // Longueur à l'équilibre du ressort
+    
 
 public:
-    ParticleSpring(const Vector3D& anchor, float springConstant, float restLength);
+    ParticleSpring(const Vector3D& anchor, float springConstant, float restLength, std::shared_ptr<Particle> particle);
 
     virtual void updateForce(std::shared_ptr<Particle> particle, float duration) override;
 };
