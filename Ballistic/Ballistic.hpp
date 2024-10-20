@@ -14,6 +14,7 @@ namespace Ballistic {
 
 void setup();
 void update();
+void detectCollisions();
 void draw();
 void exit();
 void createParticle(char type);

@@ -16,6 +16,8 @@ std::vector<Vector3D> trajectory; //Liste des positions représentant la traject
 bool isParticleCreated = false;    // Drapeau pour savoir si une particule a été créée
 char selectedParticleType = '\0';  // Stocke le type de particule sélectionné, mais non encore créé
 
+int numColl = 0;
+
 /* FORCES */
 ParticleForceRegistry forceRegistry;
 auto gravity = std::make_shared<ParticleGravity>();
@@ -49,7 +51,10 @@ void Ballistic::update() {
         // Récupérer la durée de la dernière frame
         float dt = ofGetLastFrameTime();
 
-        //Iteration à travers toutes les particules
+        // Détection des collisions existantes durant cette frame
+        detectCollisions();
+
+        // Application de la gravité
         for (auto p : particles)
         {
             // Créer les forces (ici uniquement la gravité) et les ajouter au registre
@@ -64,6 +69,48 @@ void Ballistic::update() {
         
         // Nettoyer le registre
         forceRegistry.clear();
+    }
+}
+
+void Ballistic::detectCollisions() {
+    //Itération à travers chaque paire de particules
+    for (int i = 0; i < particles.size(); i++)
+    {
+        std::shared_ptr<Particle> particleA = particles.at(i);
+        for (int j = i+1; j < particles.size(); j++)
+        {
+            std::shared_ptr<Particle> particleB = particles.at(j);
+            
+            //Calculer le vecteur distance entre les deux particules
+            Vector3D dist = particleA->position() - particleB->position();                                
+            
+            //Si la distance est inférieure à la somme de leurs rayons, il ya collision
+            if (dist.norm() < (particleA->radius() + particleB->radius()))        
+            {
+                //Calculer de combien elles se pénètrent l'une l'autre
+                //puis réduire le vecteur distance à cette taille
+                float penetration = dist.norm() - (particleA->radius() + particleB->radius());
+                Vector3D normal = dist.normalize(); //Vecteur unitaire dans la direction de B vers A
+                Vector3D displacement = normal * penetration;
+
+                //Calculer un nouveau vecteur "unitaire" représentant le déplacement par unité de masse 
+                //pour éviter de devoir faire plusieurs divisions
+                Vector3D dispPerMass = displacement / (particleA->mass() + particleB->mass());
+
+                //Appliquer à chaque particule sa "part" du déplacement, basée sur la masse de l'autre
+                particleA->addDisplacement(dispPerMass * (particleB->mass() * -1.0f));
+                particleB->addDisplacement(dispPerMass * particleA->mass());
+
+                float elasticity = 0.5f;
+                float relativeVelocity = particleA->velocity().dot(normal) - particleB->velocity().dot(normal);
+                float test = (particleA->velocity() - particleB->velocity()).dot(normal);
+                float momentumTransfer = ((1 + elasticity) * relativeVelocity) / (particleA->inverseMass() + particleB->inverseMass());
+
+                particleA->addVelocity(normal * momentumTransfer * particleA->inverseMass() * -1.0f);
+                particleB->addVelocity(normal * momentumTransfer * particleB->inverseMass());
+                numColl++;
+            }
+        }
     }
 }
 
@@ -83,6 +130,7 @@ void Ballistic::draw() {
     info += "B: Cannonball (Mass: 3.92 kg)\n";
     info += "F: Football (Mass: 0.43 kg)\n";
     info += "P: Ping-pong ball (Mass: 0.0027 kg)\n";
+    info += std::to_string(numColl);
 
     ofDrawBitmapString(info, windowWidth - marginRight - 200, marginTop);  // Position à droite
     
@@ -123,7 +171,7 @@ void Ballistic::mousePressed(int x, int y) {
         Vector3D clickPos(x, y, 0.f);  // Position du clic de la souris
 
         // Calculer le vecteur de vélocité initiale
-        Vector3D velocity = (clickPos - pos) * 1.5f;
+        Vector3D velocity = (clickPos - pos) * 2.0f;
 
         // Créer la particule à partir du coin inférieur gauche avec le vecteur de vélocité calculé
         switch (selectedParticleType) {
