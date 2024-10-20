@@ -1,17 +1,8 @@
 #include "Ballistic.hpp"
 #include "Particle/Particle.hpp"
 #include "ofMain.h"
-#include "Vector3D/Vector3D.hpp"
-#include "Force/ParticleForceGenerator.hpp"
-#include "Force/ParticleForceRegistry.hpp"
-#include "Force/Gravity/ParticleGravity.hpp"
 #include "Collision/CollisionManager.h"
 
-#include <vector>
-#include <array>
-#include <string>
-#include <memory>
-#include <limits>
 
 std::vector<std::shared_ptr<Particle>> particles; //Liste des particules gérées par cette classe
 std::vector<Vector3D> trajectory; //Liste des positions représentant la trajectoire de la dernière particule créée
@@ -21,7 +12,6 @@ int numColl = 0;
 
 /* FORCES */
 ParticleForceRegistry forceRegistry;
-auto gravity = std::make_shared<ParticleGravity>();
 
 // private function
 std::string getParticleName(char type) {
@@ -55,7 +45,7 @@ void Ballistic::update() {
         float dt = ofGetLastFrameTime();
 
         // Détection des collisions existantes durant cette frame
-        CollisionManager::detectCollisions(particles);
+        CollisionManager::detectCollisions(particles, gravityNorm, dt);
 
         // Application de la gravité
         for (auto p : particles)
@@ -153,4 +143,9 @@ void Ballistic::mousePressed(int x, int y) {
         trajectory.clear();
         isParticleCreated = true;  // La particule est maintenant créée
     }
+}
+
+Vector3D Ballistic::getGravity()
+{
+    return gravityVector;
 }

@@ -1,6 +1,6 @@
 #include "CollisionManager.h"
 
-void CollisionManager::detectCollisions(std::vector<std::shared_ptr<Particle>> particles)
+void CollisionManager::detectCollisions(std::vector<std::shared_ptr<Particle>> particles, float minSpeed, float frameTime)
 {
     //Itération à travers chaque paire de particules
     for (int i = 0; i < particles.size(); i++)
@@ -30,12 +30,20 @@ void CollisionManager::detectCollisions(std::vector<std::shared_ptr<Particle>> p
                 particleA->addDisplacement(dispPerMass * (particleB->mass() * -1.0f));
                 particleB->addDisplacement(dispPerMass * particleA->mass());
 
+                //Constante d'élasticité
                 float elasticity = 0.5f;
-                float relativeVelocity = (particleA->velocity() - particleB->velocity()).dot(normal);
-                float momentumTransfer = ((1 + elasticity) * relativeVelocity) / (particleA->inverseMass() + particleB->inverseMass());
 
-                particleA->addVelocity(normal * momentumTransfer * particleA->inverseMass() * -1.0f);
-                particleB->addVelocity(normal * momentumTransfer * particleB->inverseMass());
+                //Vitesse relative entre les deux particules, positif = elles s'éloignent l'une de l'autre
+                float relativeSpeed = (particleA->velocity() - particleB->velocity()).dot(normal); 
+
+                //Donc si la vitesse relative n'est pas négative (ou est très petite dans les négatifs), ne pas faire d'impulsion
+                if (relativeSpeed < -minSpeed * frameTime)
+                {
+                    float momentumTransfer = ((1 + elasticity) * relativeSpeed) / (particleA->inverseMass() + particleB->inverseMass());
+
+                    particleA->addVelocity(normal * momentumTransfer * particleA->inverseMass() * -1.0f);
+                    particleB->addVelocity(normal * momentumTransfer * particleB->inverseMass());
+                }
             }
         }
     }

@@ -7,6 +7,6 @@
 class CollisionManager
 {
 	public:
-		static void detectCollisions(std::vector<std::shared_ptr<Particle>> particles);
+		static void detectCollisions(std::vector<std::shared_ptr<Particle>> particles, float minSpeed, float frameTime);
 };
 
