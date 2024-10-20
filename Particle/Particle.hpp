@@ -10,6 +10,7 @@
 
 #include "Vector3D/Vector3D.hpp"
 #include <array>
+#include <cmath>
 
 class Particle {
     

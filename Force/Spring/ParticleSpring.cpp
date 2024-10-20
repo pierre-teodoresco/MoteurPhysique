@@ -18,6 +18,9 @@ void ParticleSpring::updateForce(std::shared_ptr<Particle> particle, float durat
     // Force exercée par le ressort : F = -k * extension
     Vector3D force = displacement.normalize() * (-m_springConstant * extension);
 
+    // On soustrait la friction du ressort (proportionnelle à la vélocité de la particule)
+    force -= particle->velocity() * 0.3f;
+    
     // Application de la force à la particule
     particle->addForce(force);
 }

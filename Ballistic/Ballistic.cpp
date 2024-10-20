@@ -57,9 +57,6 @@ void Ballistic::update() {
         {
             // Créer les forces (ici uniquement la gravité) et les ajouter au registre
             forceRegistry.add(p, gravity);
-            
-            // Intégrer avec le delta time
-            p->integrate(dt);
         }
 
         for (auto s : activeSprings)
@@ -72,6 +69,13 @@ void Ballistic::update() {
         
         // Nettoyer le registre
         forceRegistry.clear();
+
+        // Intégration
+        for (auto p : particles)
+        {
+            // Intégrer avec le delta time
+            p->integrate(dt);
+        }
     }
 }
 

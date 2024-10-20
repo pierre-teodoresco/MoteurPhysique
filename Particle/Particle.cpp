@@ -85,7 +85,9 @@ void Particle::integrate(float dt) {
     m_velocity += m_veloAccum;
     // Update velocity using acceleration
     m_velocity += m_acceleration * dt;
-    
+    // Apply air drag
+    m_velocity *= std::pow(0.9f, dt);
+
     // Update position using velocity
     m_position += m_velocity * dt;
 
