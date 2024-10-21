@@ -1,9 +1,14 @@
+#define _USE_MATH_DEFINES
 #include "Ballistic.hpp"
 #include "Particle/Particle.hpp"
 #include "ofMain.h"
 #include "Collision/CollisionManager.h"
 #include "Force/Spring/Spring.h"
 #include "Force/Spring/AnchoredSpring.hpp"
+#include "Force/Spring/ParticleSpring.hpp"
+#include <cmath>
+#include <numbers>
+#include <algorithm>
 
 std::vector<std::shared_ptr<Particle>> particles; //Liste des particules gérées par cette classe
 std::vector<std::shared_ptr<Spring>> activeSprings; //Liste des particules gérées par cette classe
@@ -33,20 +38,39 @@ std::string getParticleName(char type) {
 
 void Ballistic::setup() {
     ofShowCursor();
-    particles.push_back(std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, ofGetHeight()*50, 0), Vector3D(), std::numeric_limits<float>::max(), 255, 255, 255, ofGetHeight()*49, true));
-    auto p = std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, ofGetHeight() / 2 + 50, 0), Vector3D(), 3.92f, 199, 45, 40, 30.0, false);
+    particles.push_back(std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, ofGetHeight() * 50, 0), Vector3D(), std::numeric_limits<float>::max(), 255, 255, 255, ofGetHeight() * 49, true));
+    particles.push_back(std::make_shared<Particle>(Vector3D(ofGetWidth(), ofGetHeight()-60, 0), Vector3D(), std::numeric_limits<float>::max(), 255, 255, 255, 60, true));
+    //auto p = std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, 524, 0), Vector3D(), 3.92f, 199, 45, 40, 30.0, false);
+    //particles.push_back(p);
+    //activeSprings.push_back(std::make_shared<AnchoredSpring>(Vector3D(ofGetWidth() / 2, ofGetHeight() / 2 - 50, 0), 54.0f, 50, p));
+    //auto p2 = std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, ofGetHeight() / 2 + 50, 0), Vector3D(), 3.92f, 199, 45, 40, 30.0, false);
+    //particles.push_back(p2);
+    //activeSprings.push_back(std::make_shared<ParticleSpring>(70.0f, 30.0f, p, p2));
+    
+   auto p = std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, 500, 0), Vector3D(), 2.0f, 45, 199, 40, 35.0, false);
     particles.push_back(p);
-    activeSprings.push_back(std::make_shared<AnchoredSpring>(Vector3D(ofGetWidth() / 2, ofGetHeight() / 2, 0), 54.0f, 50, p));
+    int start = particles.size()-1;
+    for (int i = 0; i < 6; i++)
+    {
+        Vector3D test = Vector3D((ofGetWidth() / 2) + 33 * cos((2 * M_PI * i) / 6), 500 + 33 * sin((2 * M_PI * i) / 6), 0);
+        auto p_i = std::make_shared<Particle>(Vector3D((ofGetWidth() / 2) + 36*cos((2 * M_PI * i) / 6), 500+36*sin((2*M_PI*i)/6), 0), Vector3D(), 2.0f, 45, 199, 40, 35.0, false);
+        particles.push_back(p_i);
+        activeSprings.push_back(std::make_shared<ParticleSpring>(500.0f, 70.0f, p, p_i));
+        if (i > 0)
+            activeSprings.push_back(std::make_shared<ParticleSpring>(500.0f, 70.0f, p_i, particles.at(start+i)));
+    }
+    activeSprings.push_back(std::make_shared<ParticleSpring>(500.0f, 70.0f, particles.back(), particles.at(start+1)));
     isParticleCreated = true;
 }
 
 void Ballistic::update() {
     if (particles.size() > 0) {
         // Garder trace des anciennes positions
-        trajectory.push_back(particles.back()->position());
+        //trajectory.push_back(particles.back()->position());
         
         // Récupérer la durée de la dernière frame
-        float dt = ofGetLastFrameTime();
+        float dt = std::min((float)ofGetLastFrameTime(), 0.1f);
+
 
         // Détection des collisions existantes durant cette frame
         CollisionManager::detectCollisions(particles, gravityNorm, dt);
@@ -110,9 +134,14 @@ void Ballistic::draw() {
             ofDrawCircle(pos.v3(), 2);
         }
 
+        int i = 0;
         for (auto p : particles)
         {
             p->draw();
+            ofSetColor(255,255,255);
+            int a = (int)p->velocity().y();
+            ofDrawBitmapString(std::to_string(a), p->position().x(), p->position().y());
+            i++;
         }
     }
 }

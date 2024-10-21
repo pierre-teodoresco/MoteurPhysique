@@ -1,5 +1,5 @@
-#ifndef ParticleSpring_hpp
-#define ParticleSpring_hpp
+#ifndef AnchoredSpring_hpp
+#define AnchoredSpring_hpp
 
 #include "Force/Spring/Spring.h"
 #include "Force/ParticleForceGenerator.hpp"
@@ -15,4 +15,4 @@ public:
     virtual void updateForce(std::shared_ptr<Particle> particle, float duration) override;
 };
 
-#endif /* ParticleSpring_hpp */
+#endif /* AnchoredSpring_hpp */
