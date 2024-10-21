@@ -22,6 +22,8 @@ private:
     Vector3D m_veloAccum;  // Accumulated velocity
     Vector3D m_dispAccum; // Accumulated displacement
 
+    float m_friction;
+
     float m_mass;
     float m_inverseMass;   // Inverse of the mass (useful to avoid division)
     
@@ -32,7 +34,7 @@ private:
 public:
     /* CONSTRUCTORS */
     Particle(const Vector3D& position, const Vector3D& velocity, float mass, float radius);
-    Particle(const Vector3D& position, const Vector3D& velocity, float mass, int red, int green, int blue, float radius, bool isStaticObject = false);
+    Particle(const Vector3D& position, const Vector3D& velocity, float mass, int red, int green, int blue, float radius, float friction = 1.0f, bool isStaticObject = false);
     
     /* DESTRUCTOR */
     ~Particle() = default;
@@ -52,6 +54,8 @@ public:
 
     // Radius
     float radius() const;
+
+    float friction() const;
 
     // Gravity
     bool isStaticObject() const;

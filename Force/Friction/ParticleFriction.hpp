@@ -33,11 +33,11 @@ public:
 class ParticleKineticFriction : public ParticleForceGenerator {
 private:
     float m_frictionCoefficient;  // Coefficient de friction cinétique (µ_k)
-    float m_gravity;              // Gravité pour calculer la force normale
+    float m_normalNorm;              // Gravité pour calculer la force normale
 
 public:
     // Constructeur avec coefficient de friction et gravité
-    ParticleKineticFriction(float frictionCoefficient, float gravity);
+    ParticleKineticFriction(float frictionCoefficient, float normalNorm);
 
     // Implémentation de la méthode updateForce pour la friction cinétique
     virtual void updateForce(std::shared_ptr<Particle> particle, float duration) override;

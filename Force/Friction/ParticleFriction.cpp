@@ -43,8 +43,8 @@ void ParticleStaticFriction::updateForce(std::shared_ptr<Particle> particle, flo
 
 /* Friction cinétique */
 
-ParticleKineticFriction::ParticleKineticFriction(float frictionCoefficient, float gravity)
-    : m_frictionCoefficient(frictionCoefficient), m_gravity(gravity) {}
+ParticleKineticFriction::ParticleKineticFriction(float frictionCoefficient, float normalNorm)
+    : m_frictionCoefficient(frictionCoefficient), m_normalNorm(normalNorm) {}
 
 void ParticleKineticFriction::updateForce(std::shared_ptr<Particle> particle, float duration) {
     if (particle->inverseMass() == 0.0f) return;  // Particule avec masse infinie
@@ -52,11 +52,8 @@ void ParticleKineticFriction::updateForce(std::shared_ptr<Particle> particle, fl
     Vector3D velocity = particle->velocity();
     if (velocity.squaredNorm() == 0.f) return;  // Pas de friction cinétique pour une particule au repos
 
-    // Calcul de la force normale
-    float normalForce = computeNormalForce(particle, m_gravity);
-
     // Calcul de la force de friction cinétique en opposition au mouvement : F_k = -µ_k * N * (v / |v|)
-    Vector3D frictionForce = velocity.normalize() * -m_frictionCoefficient * normalForce;
+    Vector3D frictionForce = velocity.normalize() * -m_frictionCoefficient * m_normalNorm;
 
     // Application de la force de friction à la particule
     particle->addForce(frictionForce);

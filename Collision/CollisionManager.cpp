@@ -1,6 +1,7 @@
 #include "CollisionManager.h"
+#include "Force/Friction/ParticleFriction.hpp"
 
-void CollisionManager::detectCollisions(std::vector<std::shared_ptr<Particle>> particles, float minSpeed, float frameTime)
+void CollisionManager::detectCollisions(std::vector<std::shared_ptr<Particle>> particles, std::shared_ptr<ParticleForceRegistry> registry, float minSpeed, float frameTime)
 {
     //Itération à travers chaque paire de particules
     for (int i = 0; i < particles.size(); i++)
@@ -30,19 +31,32 @@ void CollisionManager::detectCollisions(std::vector<std::shared_ptr<Particle>> p
                 particleA->addDisplacement(dispPerMass * (particleB->mass() * -1.0f));
                 particleB->addDisplacement(dispPerMass * particleA->mass());
 
-                //Constante d'élasticité
-                float elasticity = 0.5f;
-
+                
                 //Vitesse relative entre les deux particules, positif = elles s'éloignent l'une de l'autre
                 float relativeSpeed = (particleA->velocity() - particleB->velocity()).dot(normal); 
 
-                //Donc si la vitesse relative n'est pas négative (ou est très petite dans les négatifs), ne pas faire d'impulsion
+                //Constante d'élasticité
+                float elasticity;
+
+                //Donc si la vitesse relative n'est pas négative (ou est très petite dans les négatifs), absorber tout le mouvement
                 if (relativeSpeed < -minSpeed * frameTime)
+                {
+                    elasticity = 0.5f;
+                }
+                else
+                {
+                    elasticity = 0.0f;
+                }
+
+                if (relativeSpeed < 0)
                 {
                     float momentumTransfer = ((1 + elasticity) * relativeSpeed) / (particleA->inverseMass() + particleB->inverseMass());
 
                     particleA->addVelocity(normal * momentumTransfer * particleA->inverseMass() * -1.0f);
                     particleB->addVelocity(normal * momentumTransfer * particleB->inverseMass());
+
+                    registry->add(particleA, std::make_shared<ParticleKineticFriction>(particleB->friction(), -relativeSpeed));
+                    registry->add(particleB, std::make_shared<ParticleKineticFriction>(particleA->friction(), -relativeSpeed));
                 }
             }
         }

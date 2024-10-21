@@ -14,11 +14,12 @@ Particle::Particle(const Vector3D& position, const Vector3D& velocity, float mas
     Particle(position, velocity, mass, 255, 255, 255, radius, false);
 }
 
-Particle::Particle(const Vector3D& position, const Vector3D& velocity, float mass, int red, int green, int blue, float radius, bool isStaticObject)
+Particle::Particle(const Vector3D& position, const Vector3D& velocity, float mass, int red, int green, int blue, float radius, float friction, bool isStaticObject)
     : m_position(position), m_velocity(velocity), m_forceAccum(0, 0, 0), m_veloAccum(0, 0, 0), m_dispAccum(0, 0, 0), m_acceleration(0, 0, 0) {
     setMass(mass); // Initialize mass (or inverse mass) here
     m_color = { red, green, blue };
     m_radius = radius;
+    m_friction = friction;
     m_isStaticObject = isStaticObject;
 }
 
@@ -49,6 +50,11 @@ float Particle::radius() const {
     return m_radius;
 }
 
+float Particle::friction() const
+{
+    return m_friction;
+}
+
 bool Particle::isStaticObject() const
 {
     return m_isStaticObject;
@@ -62,7 +68,7 @@ void Particle::addForce(const Vector3D& force) {
 }
 
 void Particle::addVelocity(const Vector3D& velo) {
-    m_veloAccum += velo;
+    m_velocity += velo;
 }
 
 void Particle::addDisplacement(const Vector3D& disp) {
@@ -82,7 +88,7 @@ void Particle::integrate(float dt) {
     m_acceleration = m_forceAccum * m_inverseMass;
     
     // Update velocity using accumulated velocity
-    m_velocity += m_veloAccum;
+    //m_velocity += m_veloAccum;
     // Update velocity using acceleration
     m_velocity += m_acceleration * dt;
     // Apply air drag

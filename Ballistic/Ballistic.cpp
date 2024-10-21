@@ -18,7 +18,7 @@ char selectedParticleType = '\0';  // Stocke le type de particule sélectionné,
 
 std::shared_ptr<Particle> blobCore;
 /* FORCES */
-ParticleForceRegistry forceRegistry;
+std::shared_ptr<ParticleForceRegistry> forceRegistry;
 
 // private function
 std::string getParticleName(char type) {
@@ -39,8 +39,9 @@ std::string getParticleName(char type) {
 
 void Ballistic::setup() {
     ofShowCursor();
-    particles.push_back(std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, ofGetHeight() * 50, 0), Vector3D(), std::numeric_limits<float>::max(), 255, 255, 255, ofGetHeight() * 49, true));
-    particles.push_back(std::make_shared<Particle>(Vector3D(ofGetWidth(), ofGetHeight()-60, 0), Vector3D(), std::numeric_limits<float>::max(), 255, 255, 255, 60, true));
+    forceRegistry = std::make_shared<ParticleForceRegistry>();
+    particles.push_back(std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, ofGetHeight() * 50, 0), Vector3D(), std::numeric_limits<float>::max(), 255, 255, 255, ofGetHeight() * 49, 40, true));
+    particles.push_back(std::make_shared<Particle>(Vector3D(ofGetWidth(), ofGetHeight()-60, 0), Vector3D(), std::numeric_limits<float>::max(), 255, 255, 255, 60, 40, true));
 
     blobCore = std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, 500, 0), Vector3D(), 2.0f, 45, 199, 40, 35.0, false);
     particles.push_back(blobCore);
@@ -68,25 +69,25 @@ void Ballistic::update() {
 
 
         // Détection des collisions existantes durant cette frame
-        CollisionManager::detectCollisions(particles, gravityNorm, dt);
+        CollisionManager::detectCollisions(particles, forceRegistry, gravityNorm, dt);
 
         // Application de la gravité
         for (auto p : particles)
         {
             // Créer les forces (ici uniquement la gravité) et les ajouter au registre
-            forceRegistry.add(p, gravity);
+            forceRegistry->add(p, gravity);
         }
 
         for (auto s : activeSprings)
         {
-            forceRegistry.add(s->getParticle(), s);
+            forceRegistry->add(s->getParticle(), s);
         }
         
         // Appliquer les forces du registre
-        forceRegistry.updateForces(dt);
+        forceRegistry->updateForces(dt);
         
         // Nettoyer le registre
-        forceRegistry.clear();
+        forceRegistry->clear();
 
         // Intégration
         for (auto p : particles)
