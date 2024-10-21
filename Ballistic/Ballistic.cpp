@@ -40,14 +40,8 @@ void Ballistic::setup() {
     ofShowCursor();
     particles.push_back(std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, ofGetHeight() * 50, 0), Vector3D(), std::numeric_limits<float>::max(), 255, 255, 255, ofGetHeight() * 49, true));
     particles.push_back(std::make_shared<Particle>(Vector3D(ofGetWidth(), ofGetHeight()-60, 0), Vector3D(), std::numeric_limits<float>::max(), 255, 255, 255, 60, true));
-    //auto p = std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, 524, 0), Vector3D(), 3.92f, 199, 45, 40, 30.0, false);
-    //particles.push_back(p);
-    //activeSprings.push_back(std::make_shared<AnchoredSpring>(Vector3D(ofGetWidth() / 2, ofGetHeight() / 2 - 50, 0), 54.0f, 50, p));
-    //auto p2 = std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, ofGetHeight() / 2 + 50, 0), Vector3D(), 3.92f, 199, 45, 40, 30.0, false);
-    //particles.push_back(p2);
-    //activeSprings.push_back(std::make_shared<ParticleSpring>(70.0f, 30.0f, p, p2));
-    
-   auto p = std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, 500, 0), Vector3D(), 2.0f, 45, 199, 40, 35.0, false);
+
+    auto p = std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, 500, 0), Vector3D(), 2.0f, 45, 199, 40, 35.0, false);
     particles.push_back(p);
     int start = particles.size()-1;
     for (int i = 0; i < 6; i++)
@@ -134,14 +128,9 @@ void Ballistic::draw() {
             ofDrawCircle(pos.v3(), 2);
         }
 
-        int i = 0;
         for (auto p : particles)
         {
             p->draw();
-            ofSetColor(255,255,255);
-            int a = (int)p->velocity().y();
-            ofDrawBitmapString(std::to_string(a), p->position().x(), p->position().y());
-            i++;
         }
     }
 }
