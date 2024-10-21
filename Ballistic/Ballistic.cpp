@@ -40,8 +40,8 @@ std::string getParticleName(char type) {
 void Ballistic::setup() {
     ofShowCursor();
     forceRegistry = std::make_shared<ParticleForceRegistry>();
-    particles.push_back(std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, ofGetHeight() * 50, 0), Vector3D(), std::numeric_limits<float>::max(), 255, 255, 255, ofGetHeight() * 49, 40, true));
-    particles.push_back(std::make_shared<Particle>(Vector3D(ofGetWidth(), ofGetHeight()-60, 0), Vector3D(), std::numeric_limits<float>::max(), 255, 255, 255, 60, 40, true));
+    particles.push_back(std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, ofGetHeight() * 50, 0), Vector3D(), std::numeric_limits<float>::max(), 255, 255, 255, ofGetHeight() * 49, 80, true));
+    particles.push_back(std::make_shared<Particle>(Vector3D(ofGetWidth(), ofGetHeight()-60, 0), Vector3D(), std::numeric_limits<float>::max(), 255, 255, 255, 60, 80, true));
 
     blobCore = std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, 500, 0), Vector3D(), 2.0f, 45, 199, 40, 35.0, false);
     particles.push_back(blobCore);
