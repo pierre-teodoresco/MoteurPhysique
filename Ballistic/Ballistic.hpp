@@ -31,6 +31,7 @@ void exit();
 void createParticle(char type);
 void mousePressed(int x, int y);  // Gérer le clic de la souris
 Vector3D getGravity();
+void addImpulseToBlob(Vector3D impulse);
 
 }
 

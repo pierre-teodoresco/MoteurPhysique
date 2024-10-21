@@ -16,6 +16,7 @@ std::vector<Vector3D> trajectory; //Liste des positions représentant la traject
 bool isParticleCreated = false;    // Drapeau pour savoir si une particule a été créée
 char selectedParticleType = '\0';  // Stocke le type de particule sélectionné, mais non encore créé
 
+std::shared_ptr<Particle> blobCore;
 /* FORCES */
 ParticleForceRegistry forceRegistry;
 
@@ -41,15 +42,15 @@ void Ballistic::setup() {
     particles.push_back(std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, ofGetHeight() * 50, 0), Vector3D(), std::numeric_limits<float>::max(), 255, 255, 255, ofGetHeight() * 49, true));
     particles.push_back(std::make_shared<Particle>(Vector3D(ofGetWidth(), ofGetHeight()-60, 0), Vector3D(), std::numeric_limits<float>::max(), 255, 255, 255, 60, true));
 
-    auto p = std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, 500, 0), Vector3D(), 2.0f, 45, 199, 40, 35.0, false);
-    particles.push_back(p);
+    blobCore = std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, 500, 0), Vector3D(), 2.0f, 45, 199, 40, 35.0, false);
+    particles.push_back(blobCore);
     int start = particles.size()-1;
     for (int i = 0; i < 6; i++)
     {
         Vector3D test = Vector3D((ofGetWidth() / 2) + 33 * cos((2 * M_PI * i) / 6), 500 + 33 * sin((2 * M_PI * i) / 6), 0);
         auto p_i = std::make_shared<Particle>(Vector3D((ofGetWidth() / 2) + 36*cos((2 * M_PI * i) / 6), 500+36*sin((2*M_PI*i)/6), 0), Vector3D(), 2.0f, 45, 199, 40, 35.0, false);
         particles.push_back(p_i);
-        activeSprings.push_back(std::make_shared<ParticleSpring>(500.0f, 70.0f, p, p_i));
+        activeSprings.push_back(std::make_shared<ParticleSpring>(500.0f, 70.0f, blobCore, p_i));
         if (i > 0)
             activeSprings.push_back(std::make_shared<ParticleSpring>(500.0f, 70.0f, p_i, particles.at(start+i)));
     }
@@ -179,4 +180,9 @@ void Ballistic::mousePressed(int x, int y) {
 Vector3D Ballistic::getGravity()
 {
     return gravityVector;
+}
+
+void Ballistic::addImpulseToBlob(Vector3D impulse)
+{
+    blobCore->addVelocity(impulse);
 }

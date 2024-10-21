@@ -27,6 +27,15 @@ void ofApp::keyPressed(int key){
     if (key == 'b' || key == 'f' || key == 'p') {
         Ballistic::createParticle(key);
     }
+    if (key == 'w')
+        Ballistic::addImpulseToBlob(Vector3D(0, -100, 0));
+    if (key == 'a')
+        Ballistic::addImpulseToBlob(Vector3D(-200, 0, 0));
+    if (key == 's')
+        Ballistic::addImpulseToBlob(Vector3D(0, 100, 0));
+    if (key == 'd')
+        Ballistic::addImpulseToBlob(Vector3D(200, 0, 0));
+
 }
 
 //--------------------------------------------------------------
