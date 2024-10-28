@@ -1,12 +1,4 @@
-//
-//  Vector3D.hpp
-//  MoteurPhysique
-//
-//  Created by Pierre Teodoresco on 16/09/2024.
-//
-
-#ifndef Vector3D_hpp
-#define Vector3D_hpp
+#pragma once
 
 #include "glm/vec2.hpp"
 #include "glm/vec3.hpp"
@@ -77,5 +69,3 @@ public:
     glm::vec3 v3() const;
     
 };
-
-#endif /* Vector3D_hpp */

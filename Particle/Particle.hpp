@@ -8,7 +8,7 @@
 #ifndef Particle_hpp
 #define Particle_hpp
 
-#include "Vector3D/Vector3D.hpp"
+#include "Vector/Vector3D.hpp"
 #include <array>
 #include <cmath>
 

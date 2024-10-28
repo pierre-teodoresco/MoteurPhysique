@@ -1,11 +1,4 @@
-//
-//  testVector3D.cpp
-//  MoteurPhysique
-//
-//  Created by Pierre Teodoresco on 17/09/2024.
-//
-#include "testVector3D.h"
-#include "Vector3D.hpp"
+#include "testVector3D.hpp"
 #include <iostream>
 #include <cmath>
 #include <cassert>
@@ -163,6 +156,8 @@ void testNormalizeInPlace() {
 }
 
 void test::startVector3DTest() {
+    std::cout << "Début des tests de la classe Vector3D :\n";
+
     testAddition();
     testAdditionAssignment();
     testSubtraction();
@@ -178,5 +173,5 @@ void test::startVector3DTest() {
     testNormalize();
     testNormalizeInPlace();
 
-    std::cout << "Tous les tests sont réussis.\n";
+    std::cout << "Tous les tests de Vector3D sont réussis.\n\n";
 }
