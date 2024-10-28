@@ -1,4 +1,4 @@
-#include "testVector3D.h"
+#include "testVector3D.hpp"
 #include <iostream>
 #include <cmath>
 #include <cassert>
