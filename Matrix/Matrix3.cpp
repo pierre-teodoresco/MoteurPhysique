@@ -135,4 +135,3 @@ Matrix3 Matrix3::identity() {
     float id[3][3] = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
     return Matrix3(id);
 }
-

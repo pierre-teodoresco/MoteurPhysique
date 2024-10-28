@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vector3D/Vector3D.hpp"
+#include "Vector/Vector3D.hpp"
 
 class Matrix3 {
 private:

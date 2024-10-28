@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vector3D.hpp"
+#include "Vector/Vector3D.hpp"
 
 namespace test {
 

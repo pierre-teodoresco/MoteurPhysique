@@ -23,8 +23,8 @@ void testMatrixMultiplication() {
     Matrix3 m3 = m1 * m2;
 
     assert(m3.get(0, 0) == 30);
-    assert(m3.get(1, 1) == 84);
-    assert(m3.get(2, 2) == 138);
+    assert(m3.get(1, 0) == 84);
+    assert(m3.get(2, 2) == 90);
     std::cout << "Test de multiplication de matrices réussi.\n";
 }
 
@@ -48,10 +48,12 @@ void testMatrixDeterminant() {
 }
 
 void test::startMatrix3Test() {
+    std::cout << "Début des tests de la classe Matrix3 :\n";
+    
     testMatrixAddition();
     testMatrixMultiplication();
     testMatrixTranspose();
     testMatrixDeterminant();
 
-    std::cout << "Tous les tests de matrices sont réussis.\n";
+    std::cout << "Tous les tests de Matrix3 sont réussis.\n\n";
 }

@@ -1,7 +1,7 @@
 #include "ofMain.h"
 #include "ofApp.h"
 
-#include "Vector3D/Test/testVector3D.hpp"
+#include "Vector/Test/testVector3D.hpp"
 #include "Matrix/Test/testMatrix3.hpp"
 
 //========================================================================
@@ -20,5 +20,4 @@ int main( ){
 
 	ofRunApp(window, make_shared<ofApp>());
 	ofRunMainLoop();
-
 }
