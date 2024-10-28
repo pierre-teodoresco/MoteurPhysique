@@ -1,10 +1,3 @@
-//
-//  Vector3D.cpp
-//  MoteurPhysique
-//
-//  Created by Pierre Teodoresco on 16/09/2024.
-//
-
 #include "Vector3D.hpp"
 
 #include <cmath>

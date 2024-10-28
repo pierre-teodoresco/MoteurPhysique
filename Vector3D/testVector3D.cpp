@@ -1,11 +1,4 @@
-//
-//  testVector3D.cpp
-//  MoteurPhysique
-//
-//  Created by Pierre Teodoresco on 17/09/2024.
-//
 #include "testVector3D.h"
-#include "Vector3D.hpp"
 #include <iostream>
 #include <cmath>
 #include <cassert>
