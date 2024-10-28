@@ -10,6 +10,7 @@
 
 #include "Vector3D/Vector3D.hpp"
 #include <array>
+#include <cmath>
 
 class Particle {
     
@@ -18,15 +19,22 @@ private:
     Vector3D m_velocity;
     Vector3D m_acceleration; // Acceleration resulting from applied forces
     Vector3D m_forceAccum;  // Accumulated forces
+    Vector3D m_veloAccum;  // Accumulated velocity
+    Vector3D m_dispAccum; // Accumulated displacement
 
+    float m_friction;
+
+    float m_mass;
     float m_inverseMass;   // Inverse of the mass (useful to avoid division)
     
     float m_radius;
     std::array<int, 3> m_color;
+
+    bool m_isStaticObject;
 public:
     /* CONSTRUCTORS */
     Particle(const Vector3D& position, const Vector3D& velocity, float mass, float radius);
-    Particle(const Vector3D& position, const Vector3D& velocity, float mass, int red, int green, int blue, float radius);
+    Particle(const Vector3D& position, const Vector3D& velocity, float mass, int red, int green, int blue, float radius, float friction = 1.0f, bool isStaticObject = false);
     
     /* DESTRUCTOR */
     ~Particle() = default;
@@ -43,9 +51,19 @@ public:
     // Mass
     float mass() const;
     void setMass(float mass);
-    
+
+    // Radius
+    float radius() const;
+
+    float friction() const;
+
+    // Gravity
+    bool isStaticObject() const;
+
     // Force accumulator
-    void applyForce(const Vector3D& force);
+    void addForce(const Vector3D& force);
+    void addVelocity(const Vector3D& velo);
+    void addDisplacement(const Vector3D& disp);
     
     /* INTEGRATORS */
     
