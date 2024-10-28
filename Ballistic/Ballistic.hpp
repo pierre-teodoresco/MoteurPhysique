@@ -20,10 +20,6 @@
 
 namespace Ballistic {
 
-Vector3D gravityVector = Vector3D(0, 981.f, 0);
-float gravityNorm = gravityVector.norm();
-auto gravity = std::make_shared<ParticleGravity>(gravityVector);
-
 void setup();
 void update();
 void draw();

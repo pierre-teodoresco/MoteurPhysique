@@ -17,8 +17,12 @@ bool isParticleCreated = false;    // Drapeau pour savoir si une particule a ét
 char selectedParticleType = '\0';  // Stocke le type de particule sélectionné, mais non encore créé
 
 std::shared_ptr<Particle> blobCore;
+
 /* FORCES */
 std::shared_ptr<ParticleForceRegistry> forceRegistry;
+Vector3D gravityVector = Vector3D(0, 981.f, 0);
+float gravityNorm = gravityVector.norm();
+auto gravity = std::make_shared<ParticleGravity>(gravityVector);
 
 // private function
 std::string getParticleName(char type) {

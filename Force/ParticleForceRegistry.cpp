@@ -5,7 +5,7 @@
 //  Created by Pierre Teodoresco on 30/09/2024.
 //
 
-#include "Force/ParticleForceRegistry.hpp"
+#include "ParticleForceRegistry.hpp"
 
 ParticleForceRegistry::ParticleForceRegistry() {
     // Réserver 3 registrations pour optimiser. La valeur 3 est arbitraire et a modifiée si les besoins sont différents

@@ -5,8 +5,7 @@
 //  Created by Pierre Teodoresco on 30/09/2024.
 //
 
-#include "Force/Gravity/ParticleGravity.hpp"
-#include "Particle/Particle.hpp"
+#include "ParticleGravity.hpp"
 
 ParticleGravity::ParticleGravity(const Vector3D& gravity): m_gravity(gravity) {}
 
