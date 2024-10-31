@@ -3,6 +3,7 @@
 
 #include "Vector/Test/testVector3D.hpp"
 #include "Matrix/Test/testMatrix3.hpp"
+#include "Matrix/Test/testMatrix4.hpp"
 
 //========================================================================
 int main( ){
@@ -10,6 +11,7 @@ int main( ){
     // Unit Tests
     test::startVector3DTest();
     test::startMatrix3Test();
+    test::startMatrix4Test();
 
 	//Use ofGLFWWindowSettings for more options like multi-monitor fullscreen
 	ofGLWindowSettings settings;
