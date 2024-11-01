@@ -130,6 +130,18 @@ float Matrix3::determinant() const {
            m_data[0][2] * (m_data[1][0] * m_data[2][1] - m_data[1][1] * m_data[2][0]);
 }
 
+/* COMPARISONS */
+bool Matrix3::operator==(const Matrix3& other) const {
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            if (m_data[i][j] != other.m_data[i][j]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 /* STATIC METHODS */
 Matrix3 Matrix3::identity() {
     float id[3][3] = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};

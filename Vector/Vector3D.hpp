@@ -48,11 +48,6 @@ public:
     // Subtraction
     Vector3D operator-(const Vector3D& other) const;
     Vector3D& operator-=(const Vector3D& other);
-
-
-    bool operator==(const Vector3D& a) const {
-        return m_x == a.x() && m_y == a.y() && m_z == a.z();
-    }
     
     // Dot product (produit scalaire)
     float dot(const Vector3D& other) const;
@@ -63,6 +58,9 @@ public:
     // Normalization
     Vector3D normalize() const;
     void normalizeInPlace();
+    
+    /* COMPARISONS */
+    bool operator==(const Vector3D& other) const;
     
     /* OPEN FRAMEWORK */
     glm::vec2 v2() const;

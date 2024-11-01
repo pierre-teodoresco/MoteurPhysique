@@ -40,6 +40,9 @@ public:
 
     // Determinant (simplified for 4x4 matrices)
     float determinant() const;
+    
+    /* COMPARISONS */
+    bool operator==(const Matrix4& other) const;
 
     /* STATIC METHODS */
     static Matrix4 identity();

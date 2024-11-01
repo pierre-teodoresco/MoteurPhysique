@@ -122,6 +122,18 @@ float Matrix4::determinant() const {
     return 0; // Placeholder: You should implement the actual determinant logic if needed.
 }
 
+/* COMPARISONS */
+bool Matrix4::operator==(const Matrix4& other) const {
+    for (int i = 0; i < 4; ++i) {
+        for (int j = 0; j < 4; ++j) {
+            if (m_data[i][j] != other.m_data[i][j]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 /* STATIC METHODS */
 Matrix4 Matrix4::identity() {
     float id[4][4] = {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}};
