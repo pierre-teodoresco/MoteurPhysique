@@ -1,4 +1,5 @@
 #include "ParticleSpring.hpp"
+#include "Particle/Particle.hpp"
 
 ParticleSpring::ParticleSpring(float springConstant, float restLength, std::shared_ptr<Particle> particleA, std::shared_ptr<Particle> particleB)
 {

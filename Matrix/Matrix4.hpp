@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vector3D.hpp" // Assuming Vector3D may be used in future extensions
+#include "Vector/Vector3D.hpp" // Assuming Vector3D may be used in future extensions
 
 class Matrix4 {
 private:
