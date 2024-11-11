@@ -120,6 +120,16 @@ void Vector3D::normalizeInPlace() {
     }
 }
 
+/* COMPARISONS */
+
+bool Vector3D::operator==(const Vector3D& other) const {
+    return (
+        m_x == other.x() &&
+        m_y == other.y() &&
+        m_z == other.z()
+    );
+}
+
 /* OPEN FRAMEWORK */
 
 glm::vec2 Vector3D::v2() const {
