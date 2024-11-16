@@ -14,7 +14,7 @@
 
 class Particle {
     
-private:
+protected:
     Vector3D m_position;
     Vector3D m_velocity;
     Vector3D m_acceleration; // Acceleration resulting from applied forces

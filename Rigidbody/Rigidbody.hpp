@@ -4,8 +4,9 @@
 #include "../Matrix/Matrix3.hpp"
 #include "../Matrix/Matrix4.hpp"
 #include "../Quaternion/Quaternion.h"
+#include "Particle/Particle.hpp"
 
-class RigidBody {
+class RigidBody : public Particle {
 private:
     float m_mass; // Masse du rigid body
     float m_inverseMass; // Inverse de la masse
@@ -21,15 +22,13 @@ private:
 
 public:
     // Constructeur
-    RigidBody(float mass, const Vector3D& position, const Quaternion& orientation);
+    RigidBody(const Vector3D& position, const Vector3D& velocity, float mass, int red, int green, int blue, float radius, const Quaternion& orientation);
 
     // Setters
-    void setMass(float mass);
-    void addForce(const Vector3D& force);
+    void addForce(const Vector3D& force, const Vector3D& location);
     void addTorque(const Vector3D& torque);
 
     // Getters
-    const Vector3D& position() const { return m_position; }
     const Quaternion& orientation() const { return m_orientation; }
     const Vector3D& linearVelocity() const { return m_linearVelocity; }
     const Vector3D& angularVelocity() const { return m_angularVelocity; }

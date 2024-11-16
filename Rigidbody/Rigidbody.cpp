@@ -2,8 +2,8 @@
 #include "Rigidbody.hpp"
 
 // Constructeur
-RigidBody::RigidBody(float mass, const Vector3D& position, const Quaternion& orientation)
-    : m_mass(mass), m_position(position), m_orientation(orientation) {
+RigidBody::RigidBody(const Vector3D& position, const Vector3D& velocity, float mass, int red, int green, int blue, float radius, const Quaternion& orientation) : Particle(position, velocity, mass, red, green, blue, radius, 0.0f, false),
+    m_mass(mass), m_position(position), m_orientation(orientation) {
     setMass(mass);
     m_linearVelocity = Vector3D(0, 0, 0);
     m_angularVelocity = Vector3D(0, 0, 0);
@@ -12,20 +12,41 @@ RigidBody::RigidBody(float mass, const Vector3D& position, const Quaternion& ori
     updateInertiaTensor(); // Initialise le Tenseur d'inertie
 }
 
-// Definition et calcul de l'inverseMasse
-void RigidBody::setMass(float mass) {
-    m_mass = mass;
-    m_inverseMass = (mass > 0.0f) ? 1.0f / mass : 0.0f;
-}
-
 // Ajout des forces au corps rigide
-void RigidBody::addForce(const Vector3D& force) {
+void RigidBody::addForce(const Vector3D& force, const Vector3D& location) {
     m_forceAccum += force;
+    Vector3D lever = location - m_position;
+    addTorque(lever * force);
 }
 
 // Ajout du torque au corps rigide
 void RigidBody::addTorque(const Vector3D& torque) {
     m_torqueAccum += torque;
+}
+
+void RigidBody::integrate(float dt)
+{
+    if (m_inverseMass <= 0.0f || m_isStaticObject) return; // If the particle has infinite mass, do not move it
+
+// Update position using accumulated displacement
+    m_position += m_dispAccum;
+
+    // Calculate acceleration from the accumulated force
+    m_acceleration = m_forceAccum * m_inverseMass;
+
+    // Update velocity using accumulated velocity
+    //m_velocity += m_veloAccum;
+    // Update velocity using acceleration
+    m_velocity += m_acceleration * dt;
+    // Apply air drag
+    m_velocity *= std::pow(0.9f, dt);
+
+    // Update position using velocity
+    m_position += m_velocity * dt;
+
+    // Reset accumulated forces after integration
+    clearForces();
+
 }
 
 // Mis a Jour du tenseur Inertie
