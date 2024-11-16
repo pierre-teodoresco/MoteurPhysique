@@ -1,12 +1,4 @@
-//
-//  Vector3D.hpp
-//  MoteurPhysique
-//
-//  Created by Pierre Teodoresco on 16/09/2024.
-//
-
-#ifndef Vector3D_hpp
-#define Vector3D_hpp
+#pragma once
 
 #include "glm/vec2.hpp"
 #include "glm/vec3.hpp"
@@ -56,11 +48,6 @@ public:
     // Subtraction
     Vector3D operator-(const Vector3D& other) const;
     Vector3D& operator-=(const Vector3D& other);
-
-
-    bool operator==(const Vector3D& a) const {
-        return m_x == a.x() && m_y == a.y() && m_z == a.z();
-    }
     
     // Dot product (produit scalaire)
     float dot(const Vector3D& other) const;
@@ -72,10 +59,11 @@ public:
     Vector3D normalize() const;
     void normalizeInPlace();
     
+    /* COMPARISONS */
+    bool operator==(const Vector3D& other) const;
+    
     /* OPEN FRAMEWORK */
     glm::vec2 v2() const;
     glm::vec3 v3() const;
     
 };
-
-#endif /* Vector3D_hpp */

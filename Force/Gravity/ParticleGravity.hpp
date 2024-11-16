@@ -9,7 +9,7 @@
 #define ParticleGravity_hpp
 
 #include "Force/ParticleForceGenerator.hpp"
-#include "Vector3D/Vector3D.hpp"
+#include "Vector/Vector3D.hpp"
 #include "Particle/Particle.hpp"
 
 #include <memory>

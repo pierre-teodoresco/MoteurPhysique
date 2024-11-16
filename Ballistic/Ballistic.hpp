@@ -8,7 +8,7 @@
 #ifndef Ballistic_hpp
 #define Ballistic_hpp
 
-#include "Vector3D/Vector3D.hpp"
+#include "Vector/Vector3D.hpp"
 #include "Force/ParticleForceGenerator.hpp"
 #include "Force/ParticleForceRegistry.hpp"
 #include "Force/Gravity/ParticleGravity.hpp"

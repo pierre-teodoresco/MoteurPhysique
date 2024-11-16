@@ -1,13 +1,17 @@
 #include "ofMain.h"
 #include "ofApp.h"
 
-#include "Vector3D/testVector3D.h"
+#include "Vector/Test/testVector3D.hpp"
+#include "Matrix/Test/testMatrix3.hpp"
+#include "Matrix/Test/testMatrix4.hpp"
 
 //========================================================================
 int main( ){
     
     // Unit Tests
     test::startVector3DTest();
+    test::startMatrix3Test();
+    test::startMatrix4Test();
 
 	//Use ofGLFWWindowSettings for more options like multi-monitor fullscreen
 	ofGLWindowSettings settings;
@@ -18,5 +22,4 @@ int main( ){
 
 	ofRunApp(window, make_shared<ofApp>());
 	ofRunMainLoop();
-
 }

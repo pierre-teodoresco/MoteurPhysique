@@ -1,10 +1,3 @@
-//
-//  Vector3D.cpp
-//  MoteurPhysique
-//
-//  Created by Pierre Teodoresco on 16/09/2024.
-//
-
 #include "Vector3D.hpp"
 
 #include <cmath>
@@ -125,6 +118,16 @@ void Vector3D::normalizeInPlace() {
         m_y /= normValue;
         m_z /= normValue;
     }
+}
+
+/* COMPARISONS */
+
+bool Vector3D::operator==(const Vector3D& other) const {
+    return (
+        m_x == other.x() &&
+        m_y == other.y() &&
+        m_z == other.z()
+    );
 }
 
 /* OPEN FRAMEWORK */
