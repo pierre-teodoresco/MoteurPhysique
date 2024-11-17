@@ -2,6 +2,7 @@
 #include <cmath>
 #include <iostream>
 #include <glm/glm.hpp>
+#include "Matrix\Matrix3.hpp"
 
 class Quaternion {
 public:
@@ -21,6 +22,7 @@ public:
 
 	void Print() const;
 	glm::quat ToGLMQuat() const;
+	Matrix3 ToMatrix3() const;
 
 	float getX() const { return x; }
 	float getY() const { return y; }

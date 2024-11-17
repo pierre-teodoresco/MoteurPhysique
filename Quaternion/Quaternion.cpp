@@ -51,3 +51,21 @@ void Quaternion::Print() const {
 glm::quat Quaternion::ToGLMQuat() const {
 	return glm::quat(w, x, y, z);
 }
+
+Matrix3 Quaternion::ToMatrix3() const
+{
+	float r00 = 2 * (w * w + x * x) - 1;
+	float r01 = 2 * (x * y - w * z);
+	float r02 = 2 * (x * z + w * y);
+
+	float r10 = 2 * (x * y + w * z);
+	float r11 = 2 * (w * w + y * y) - 1;
+	float r12 = 2 * (y * z - w * x);
+
+	float r20 = 2 * (x * z - w * y);
+	float r21 = 2 * (y * z + w * x);
+	float r22 = 2 * (w * w + z * z) - 1;
+
+	float data[3][3] = { {r00, r01, r02}, {r10, r11, r12}, {r20, r21, r22} };
+	return Matrix3(data);
+}

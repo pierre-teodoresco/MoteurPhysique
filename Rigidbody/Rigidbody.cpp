@@ -37,7 +37,8 @@ void RigidBody::integrate(float dt)
 // Mis a Jour du tenseur Inertie
 void RigidBody::updateInertiaTensor() {
     m_inertiaTensor = Matrix3::identity();
-    m_inverseInertiaTensor = Matrix3::identity();
+    Matrix3 rotationMatrix = m_orientation.ToMatrix3();
+    m_inverseInertiaTensor = rotationMatrix * m_uprightInverseInertiaTensor; // * rotationMatrix.Inverse(); //R * J^-1 * R^-1
 }
 
 // Convesion de la velocite angulaire en quaternion
