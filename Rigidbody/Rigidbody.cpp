@@ -1,14 +1,14 @@
 #pragma once
+#include <algorithm>
 #include "Rigidbody.hpp"
 
 // Constructeur
-RigidBody::RigidBody(const Vector3D& position, const Vector3D& velocity, float mass, int red, int green, int blue, float radius, const Quaternion& orientation) : Particle(position, velocity, mass, red, green, blue, radius, 0.0f, false),
-    m_mass(mass), m_position(position), m_orientation(orientation) {
+RigidBody::RigidBody(const Vector3D& position, const Vector3D& velocity, float mass, int red, int green, int blue, float height, float width, float depth, const Quaternion& orientation) : Particle(position, velocity, mass, red, green, blue, std::min({ height, width, depth }), 0.0f, false),
+    m_orientation(orientation), m_width(width), m_height(height), m_depth(depth) {
     setMass(mass);
-    m_linearVelocity = Vector3D(0, 0, 0);
-    m_angularVelocity = Vector3D(0, 0, 0);
-    m_forceAccum = Vector3D(0, 0, 0);
     m_torqueAccum = Vector3D(0, 0, 0);
+    float data[3][3] = { {12 / (m_mass * (m_depth * m_depth + m_height * m_height)), 0, 0}, {0, 12 / (m_mass * (m_height * m_height + m_width * m_width)), 0}, {0, 0, 12 / (m_mass * (m_depth * m_depth + m_width * m_width))} };
+    m_uprightInverseInertiaTensor = Matrix3(data);
     updateInertiaTensor(); // Initialise le Tenseur d'inertie
 }
 
@@ -28,24 +28,9 @@ void RigidBody::integrate(float dt)
 {
     if (m_inverseMass <= 0.0f || m_isStaticObject) return; // If the particle has infinite mass, do not move it
 
-// Update position using accumulated displacement
-    m_position += m_dispAccum;
 
-    // Calculate acceleration from the accumulated force
-    m_acceleration = m_forceAccum * m_inverseMass;
-
-    // Update velocity using accumulated velocity
-    //m_velocity += m_veloAccum;
-    // Update velocity using acceleration
-    m_velocity += m_acceleration * dt;
-    // Apply air drag
-    m_velocity *= std::pow(0.9f, dt);
-
-    // Update position using velocity
-    m_position += m_velocity * dt;
-
-    // Reset accumulated forces after integration
-    clearForces();
+    
+    Particle::integrate(dt);
 
 }
 
