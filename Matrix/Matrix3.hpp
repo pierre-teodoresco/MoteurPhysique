@@ -43,6 +43,9 @@ public:
 
     // Determinant
     float determinant() const;
+
+    // Inverse
+    Matrix3 inverse() const;
     
     /* COMPARISONS */
     bool operator==(const Matrix3& other) const;

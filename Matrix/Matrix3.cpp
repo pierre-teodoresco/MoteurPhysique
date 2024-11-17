@@ -130,6 +130,31 @@ float Matrix3::determinant() const {
            m_data[0][2] * (m_data[1][0] * m_data[2][1] - m_data[1][1] * m_data[2][0]);
 }
 
+// Inverse
+Matrix3 Matrix3::inverse() const {
+    float det = determinant();
+    if (det == 0) {
+        throw std::runtime_error("Matrix is not invertible (determinant is zero).");
+    }
+
+    Matrix3 result;
+    float invDet = 1.0f / det;
+
+    result.m_data[0][0] = invDet * (m_data[1][1] * m_data[2][2] - m_data[1][2] * m_data[2][1]);
+    result.m_data[0][1] = invDet * (m_data[0][2] * m_data[2][1] - m_data[0][1] * m_data[2][2]);
+    result.m_data[0][2] = invDet * (m_data[0][1] * m_data[1][2] - m_data[0][2] * m_data[1][1]);
+
+    result.m_data[1][0] = invDet * (m_data[1][2] * m_data[2][0] - m_data[1][0] * m_data[2][2]);
+    result.m_data[1][1] = invDet * (m_data[0][0] * m_data[2][2] - m_data[0][2] * m_data[2][0]);
+    result.m_data[1][2] = invDet * (m_data[0][2] * m_data[1][0] - m_data[0][0] * m_data[1][2]);
+
+    result.m_data[2][0] = invDet * (m_data[1][0] * m_data[2][1] - m_data[1][1] * m_data[2][0]);
+    result.m_data[2][1] = invDet * (m_data[0][1] * m_data[2][0] - m_data[0][0] * m_data[2][1]);
+    result.m_data[2][2] = invDet * (m_data[0][0] * m_data[1][1] - m_data[0][1] * m_data[1][0]);
+
+    return result;
+}
+
 /* COMPARISONS */
 bool Matrix3::operator==(const Matrix3& other) const {
     for (int i = 0; i < 3; ++i) {
