@@ -52,7 +52,7 @@ glm::quat Quaternion::ToGLMQuat() const {
 	return glm::quat(w, x, y, z);
 }
 
-Matrix3 Quaternion::ToMatrix3() const
+Matrix3 Quaternion::ToRotationMatrix3() const
 {
 	float r00 = 2 * (w * w + x * x) - 1;
 	float r01 = 2 * (x * y - w * z);

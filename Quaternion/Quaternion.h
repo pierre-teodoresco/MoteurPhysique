@@ -22,7 +22,7 @@ public:
 
 	void Print() const;
 	glm::quat ToGLMQuat() const;
-	Matrix3 ToMatrix3() const;
+	Matrix3 ToRotationMatrix3() const;
 
 	float getX() const { return x; }
 	float getY() const { return y; }
