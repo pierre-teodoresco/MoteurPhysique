@@ -1,6 +1,7 @@
 #pragma once
 #include <cmath>
 #include <iostream>
+#include <glm/glm.hpp>
 
 class Quaternion {
 public:
@@ -19,6 +20,12 @@ public:
 	Quaternion operator*(const Quaternion& q) const;
 
 	void Print() const;
+	glm::quat ToGLMQuat() const;
+
+	float getX() const { return x; }
+	float getY() const { return y; }
+	float getZ() const { return z; }
+	float getW() const { return w; }
 
 private:
 	float x, y, z, w;

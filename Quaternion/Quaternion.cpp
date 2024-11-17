@@ -1,5 +1,7 @@
 #include "Quaternion.h"
 
+#include <glm/gtc/quaternion.hpp>
+
 float Quaternion::Norm() const {
 	return std::sqrt(w * w + x * x + y * y + z * z);
 }
@@ -44,4 +46,8 @@ Quaternion Quaternion::RotateAngle(float vx, float vy, float vz) {
 
 void Quaternion::Print() const {
 	std::cout << "Quaternion(" << w << ", " << x << ", " << y << ", " << z << ")\n";
+}
+
+glm::quat Quaternion::ToGLMQuat() const {
+	return glm::quat(w, x, y, z);
 }
