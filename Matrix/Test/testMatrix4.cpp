@@ -9,10 +9,9 @@ void testMatrix4Addition() {
     Matrix4 m2(data2);
     Matrix4 m3 = m1 + m2;
 
-    assert(m3.get(0, 0) == 17);
-    assert(m3.get(1, 1) == 17);
-    assert(m3.get(2, 2) == 17);
-    assert(m3.get(3, 3) == 17);
+    float data3[4][4] = {{17, 17, 17, 17}, {17, 17, 17, 17}, {17, 17, 17, 17}, {17, 17, 17, 17}};
+    Matrix4 m3Expected(data3);
+    assert(m3 == m3Expected);
     std::cout << "Test d'addition de matrices 4x4 réussi.\n";
 }
 
@@ -23,10 +22,9 @@ void testMatrix4Multiplication() {
     Matrix4 m2(data2);
     Matrix4 m3 = m1 * m2;
 
-    assert(m3.get(0, 0) == 80); // Verify calculation
-    assert(m3.get(1, 0) == 240);
-    assert(m3.get(1, 2) == 188);
-    assert(m3.get(3, 1) == 502);
+    float data3[4][4] = {{80, 70, 60, 50}, {240, 214, 188, 162}, {400, 358, 316, 274}, {560, 502, 444, 386}};
+    Matrix4 m3Expected(data3);
+    assert(m3 == m3Expected);
     std::cout << "Test de multiplication de matrices 4x4 réussi.\n";
 }
 
@@ -35,8 +33,9 @@ void testMatrix4Transpose() {
     Matrix4 m(data);
     Matrix4 mt = m.transpose();
 
-    assert(mt.get(0, 1) == 5);
-    assert(mt.get(1, 0) == 2);
+    float dataT[4][4] = {{1, 5, 9, 13}, {2, 6, 10, 14}, {3, 7, 11, 15}, {4, 8, 12, 16}};
+    Matrix4 mtExpected(dataT);
+    assert(mt == mtExpected);
     std::cout << "Test de transposition 4x4 réussi.\n";
 }
 
