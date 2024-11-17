@@ -1,4 +1,5 @@
 #include "Matrix3.hpp"
+#include <stdexcept>
 
 /* CONSTRUCTORS */
 Matrix3::Matrix3() {

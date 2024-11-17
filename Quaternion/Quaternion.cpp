@@ -32,6 +32,11 @@ Quaternion Quaternion::operator*(const Quaternion& q) const {
 	return Quaternion(newW, newX, newY, newZ);
 }
 
+Quaternion Quaternion::operator*(const float scalar) const
+{
+	return Quaternion(w*scalar, x*scalar, y*scalar, z*scalar);
+}
+
 Quaternion Quaternion::Rotate(const Quaternion& q) const {
 	return q * (*this) * q.Inverse();
 }
@@ -42,6 +47,11 @@ Quaternion Quaternion::RotateAngle(float vx, float vy, float vz) {
 	Quaternion rotated = (*this) * p * q_inv;
 
 	return rotated;
+}
+
+Quaternion Quaternion::operator+(const Quaternion& other) const
+{
+	return Quaternion(w+other.w, x+other.x, y+other.y, z+other.z);
 }
 
 void Quaternion::Print() const {

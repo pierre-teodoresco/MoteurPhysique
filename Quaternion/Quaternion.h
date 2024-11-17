@@ -19,6 +19,10 @@ public:
 	Quaternion RotateAngle(float vx, float vy, float vz);
 
 	Quaternion operator*(const Quaternion& q) const;
+	Quaternion operator*(const float scalar) const;
+
+	// Addition
+	Quaternion operator+(const Quaternion& other) const;
 
 	void Print() const;
 	glm::quat ToGLMQuat() const;

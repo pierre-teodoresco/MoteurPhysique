@@ -7,7 +7,8 @@ RigidBody::RigidBody(const Vector3D& position, const Vector3D& velocity, float m
     m_orientation(orientation), m_width(width), m_height(height), m_depth(depth) {
     setMass(mass);
     m_torqueAccum = Vector3D(0, 0, 0);
-    float data[3][3] = { {12 / (m_mass * (m_depth * m_depth + m_height * m_height)), 0, 0}, {0, 12 / (m_mass * (m_height * m_height + m_width * m_width)), 0}, {0, 0, 12 / (m_mass * (m_depth * m_depth + m_width * m_width))} };
+    m_angularVelocity = Vector3D(0, 0, 0);
+    float data[3][3] = { {12 / (m_mass * (m_depth * m_depth + m_height * m_height)), 0, 0}, {0, 12 / (m_mass * (m_height * m_height + m_width * m_width)), 0}, {0, 0, 12 / (m_mass * (m_depth * m_depth + m_width * m_width))} }; //Inertia moment for a box
     m_uprightInverseInertiaTensor = Matrix3(data);
     updateInertiaTensor(); // Initialise le Tenseur d'inertie
 }
@@ -28,8 +29,13 @@ void RigidBody::integrate(float dt)
 {
     if (m_inverseMass <= 0.0f || m_isStaticObject) return; // If the particle has infinite mass, do not move it
 
+    updateInertiaTensor();
+    Vector3D angularAcceleration = m_inverseInertiaTensor * m_torqueAccum;
+    m_angularVelocity += angularAcceleration * dt;
+    Quaternion angularVelocityQuat = Quaternion(0, m_angularVelocity.x(), m_angularVelocity.y(), m_angularVelocity.z());
 
-    
+    m_orientation = m_orientation + angularVelocityQuat * m_orientation * 0.5f * dt;
+
     Particle::integrate(dt);
 
 }
@@ -37,8 +43,8 @@ void RigidBody::integrate(float dt)
 // Mis a Jour du tenseur Inertie
 void RigidBody::updateInertiaTensor() {
     m_inertiaTensor = Matrix3::identity();
-    Matrix3 rotationMatrix = m_orientation.ToMatrix3();
-    m_inverseInertiaTensor = rotationMatrix * m_uprightInverseInertiaTensor; // * rotationMatrix.Inverse(); //R * J^-1 * R^-1
+    Matrix3 rotationMatrix = m_orientation.ToRotationMatrix3();
+    m_inverseInertiaTensor = rotationMatrix * m_uprightInverseInertiaTensor * rotationMatrix.inverse(); //R * J^-1 * R^-1
 }
 
 // Convesion de la velocite angulaire en quaternion
