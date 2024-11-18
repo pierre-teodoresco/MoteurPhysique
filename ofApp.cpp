@@ -4,17 +4,36 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    Ballistic::setup();
+    //Ballistic::setup();
+
+    ofBackground(0);
+    ofEnableDepthTest();
+
+    m_spawner = Spawner();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    Ballistic::update();
+    m_spawner.Update();
+
+    for (auto& box : m_spawner.GetBoxes()) {
+		//box.rotateDeg(1, 1, 1, 1);
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    Ballistic::draw();
+    m_camera.begin();
+
+    ofPushMatrix();
+
+    for (auto& box : m_spawner.GetBoxes()) {
+        box.Draw();
+	}
+
+    ofPopMatrix();
+
+    m_camera.end();
 }
 
 //--------------------------------------------------------------

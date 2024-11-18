@@ -42,7 +42,7 @@ std::string getParticleName(char type) {
 }
 
 void Ballistic::setup() {
-    ofShowCursor();
+  /*  ofShowCursor();
     forceRegistry = std::make_shared<ParticleForceRegistry>();
     particles.push_back(std::make_shared<Particle>(Vector3D(ofGetWidth() / 2, ofGetHeight() * 50, 0), Vector3D(), std::numeric_limits<float>::max(), 255, 255, 255, ofGetHeight() * 49, 80, true));
     particles.push_back(std::make_shared<Particle>(Vector3D(ofGetWidth(), ofGetHeight()-60, 0), Vector3D(), std::numeric_limits<float>::max(), 255, 255, 255, 60, 80, true));
@@ -61,6 +61,9 @@ void Ballistic::setup() {
     }
     activeSprings.push_back(std::make_shared<ParticleSpring>(500.0f, 70.0f, particles.back(), particles.at(start+1)));
     isParticleCreated = true;
+    */
+
+    
 }
 
 void Ballistic::update() {
@@ -104,41 +107,7 @@ void Ballistic::update() {
 
 
 void Ballistic::draw() {
-    // Les textes et les trajectoires sont blancs
-    ofSetColor(ofColor::white);
-    
-    // Afficher le temps de frame
-    ofDrawBitmapString("Frame time: " + ofToString(ofGetLastFrameTime()), 10, 20);
 
-    // Afficher la légende dans le coin supérieur droit
-    int windowWidth = ofGetWidth();
-    int marginRight = 100;
-    int marginTop = 20;
-
-    std::string info = "Controls:\n";
-    info += "B: Cannonball (Mass: 3.92 kg)\n";
-    info += "F: Football (Mass: 0.43 kg)\n";
-    info += "P: Ping-pong ball (Mass: 0.0027 kg)\n";
-
-    ofDrawBitmapString(info, windowWidth - marginRight - 200, marginTop);  // Position à droite
-    
-    // Afficher le type de particule
-    std::string particleName = "Selected : " + getParticleName(selectedParticleType);
-    int textWidth = 8 * particleName.length();  // Estimation de la largeur du texte (chaque caractère fait environ 8px)
-    marginRight = (windowWidth - textWidth) / 2;
-    ofDrawBitmapString(particleName, marginRight, marginTop);
-
-    if (isParticleCreated) {
-        // Dessiner la trajectoire
-        for (const auto& pos : trajectory) {
-            ofDrawCircle(pos.v3(), 2);
-        }
-
-        for (auto p : particles)
-        {
-            p->draw();
-        }
-    }
 }
 
 void Ballistic::exit() {
@@ -164,15 +133,15 @@ void Ballistic::mousePressed(int x, int y) {
         // Créer la particule à partir du coin inférieur gauche avec le vecteur de vélocité calculé
         switch (selectedParticleType) {
             case 'b':  // Boulet de canon
-                particles.push_back(std::make_shared<Particle>(pos, velocity, 3.92f, 199, 45, 40, 30.0, false));
+                //particles.push_back(std::make_shared<Particle>(pos, velocity, 3.92f, 199, 45, 40, 30.0, false));
                 break;
 
             case 'f':  // Ballon de foot
-                particles.push_back(std::make_shared<Particle>(pos, velocity, 0.43f, 255, 255, 0, 25.0, false));
+                //particles.push_back(std::make_shared<Particle>(pos, velocity, 0.43f, 255, 255, 0, 25.0, false));
                 break;
 
             case 'p':  // Balle de ping-pong
-                particles.push_back(std::make_shared<Particle>(pos, velocity, 0.0027f, 255, 255, 255, 10.0, false));
+                //particles.push_back(std::make_shared<Particle>(pos, velocity, 0.0027f, 255, 255, 255, 10.0, false));
                 break;
         }
 
