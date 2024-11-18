@@ -2,9 +2,9 @@
 #include <cmath>
 #include <iostream>
 #include <glm/glm.hpp>
+#include "Matrix\Matrix3.hpp"
 
 class Quaternion {
-
 public:
 	// Constructors
 	Quaternion() : w(1), x(0), y(0), z(0) {}
@@ -19,9 +19,14 @@ public:
 	Quaternion RotateAngle(float vx, float vy, float vz);
 
 	Quaternion operator*(const Quaternion& q) const;
+	Quaternion operator*(const float scalar) const;
+
+	// Addition
+	Quaternion operator+(const Quaternion& other) const;
 
 	void Print() const;
 	glm::quat ToGLMQuat() const;
+	Matrix3 ToRotationMatrix3() const;
 
 	float getX() const { return x; }
 	float getY() const { return y; }
