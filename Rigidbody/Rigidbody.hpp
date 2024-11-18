@@ -7,6 +7,7 @@
 #include "Particle/Particle.hpp"
 
 class RigidBody : public Particle {
+public:
     Vector3D m_torqueAccum; // Force de torque
     Quaternion m_orientation; // Orientation du rigid body
     Vector3D m_angularVelocity; // Velocite Angulaire

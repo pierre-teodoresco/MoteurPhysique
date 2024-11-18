@@ -1,10 +1,21 @@
 #include "ofApp.h"
 
 #include "Ballistic/Ballistic.hpp"
+#include "Collision/CollisionManager.h"
+#include "Force/ParticleForceRegistry.hpp"
+#include "Force/Spring/Spring.h"
+
+std::shared_ptr<ParticleForceRegistry> m_registry;
+Vector3D m_gravityVec = Vector3D(0, -981.f, 0);
+auto m_gravity = std::make_shared<ParticleGravity>(m_gravityVec);
+std::vector<std::shared_ptr<Spring>> activeSprings;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
     //Ballistic::setup();
+
+    ofShowCursor();
+    m_registry = std::make_shared<ParticleForceRegistry>();
 
     ofBackground(0);
     ofEnableDepthTest();
@@ -17,7 +28,33 @@ void ofApp::update(){
     m_spawner.Update();
 
     for (auto& box : m_spawner.GetBoxes()) {
-		//box.rotateDeg(1, 1, 1, 1);
+        float dt = std::min((float)ofGetLastFrameTime(), 0.1f);
+
+        // Détection des collisions existantes durant cette frame
+        CollisionManager::detectCollisions(m_spawner.GetBoxes(), m_registry, m_gravityVec.norm(), dt);
+
+        // Application de la gravité
+        for (auto& p : m_spawner.GetBoxes()) {
+            // Créer les forces (ici uniquement la gravité) et les ajouter au registre
+            m_registry->add(p, m_gravity);
+        }
+
+        for (auto s : activeSprings) {
+            m_registry->add(s->getParticle(), s);
+        }
+
+        // Appliquer les forces du registre
+        m_registry.get()->updateForces(dt);
+
+        // Nettoyer le registre
+        m_registry.get()->clear();
+
+        // Intégration
+        for (auto& p : m_spawner.GetBoxes()) {
+            // Intégrer avec le delta time
+            p->integrate(dt);
+        }
+
 	}
 }
 
@@ -28,7 +65,7 @@ void ofApp::draw(){
     ofPushMatrix();
 
     for (auto& box : m_spawner.GetBoxes()) {
-        box.Draw();
+        box.get()->Draw();
 	}
 
     ofPopMatrix();

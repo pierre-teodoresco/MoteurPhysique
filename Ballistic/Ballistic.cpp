@@ -76,7 +76,7 @@ void Ballistic::update() {
 
 
         // Détection des collisions existantes durant cette frame
-        CollisionManager::detectCollisions(particles, forceRegistry, gravityNorm, dt);
+       // CollisionManager::detectCollisions(particles, forceRegistry, gravityNorm, dt);
 
         // Application de la gravité
         for (auto p : particles)

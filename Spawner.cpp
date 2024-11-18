@@ -2,12 +2,13 @@
 #include <cstdlib>
 
 void Spawner::Refresh() {
-	m_spawnTime = 3 + std::rand() % (7 - 3 + 1);
+	m_spawnTime = /*3 + std::rand() % (7 - 3 + 1)*/ 10000000000000000000;
 	m_currentTime = 0.0f;
 
-	float x = std::rand() % 800;
+	m_boxes.push_back(std::make_shared<Cube>(Vector3D(10.f, 10.f, 10.f), Vector3D(0.f, 0.f,0.f),
+		1.f,255,255,255,10,10,1,Quaternion(1,0,0,0)));
 
-	m_boxes.push_back(Cube(400.f - x));
+	std::cout << "Spawned a cube " << std::endl;
 }
 
 void Spawner::Update() {
