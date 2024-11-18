@@ -36,6 +36,8 @@ void RigidBody::integrate(float dt)
 
     m_orientation = m_orientation + angularVelocityQuat * m_orientation * 0.5f * dt;
 
+    m_torqueAccum = Vector3D(0, 0, 0);;
+
     Particle::integrate(dt);
 
 }
