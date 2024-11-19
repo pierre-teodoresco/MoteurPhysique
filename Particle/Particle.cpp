@@ -88,7 +88,7 @@ void Particle::integrate(float dt) {
     m_acceleration = m_forceAccum * m_inverseMass;
     
     // Update velocity using accumulated velocity
-    //m_velocity += m_veloAccum;
+    m_velocity += m_veloAccum;
     // Update velocity using acceleration
     m_velocity += m_acceleration * dt;
     // Apply air drag

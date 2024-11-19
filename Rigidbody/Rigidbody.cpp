@@ -16,6 +16,7 @@ RigidBody::RigidBody(const Vector3D& position, const Vector3D& velocity, float m
 // Ajout des forces au corps rigide
 void RigidBody::addForce(const Vector3D& force, const Vector3D& location) {
     m_forceAccum += force;
+    
     Vector3D lever = location - m_position;
     addTorque(lever * force);
 }
@@ -32,14 +33,15 @@ void RigidBody::integrate(float dt)
     updateInertiaTensor();
     Vector3D angularAcceleration = m_inverseInertiaTensor * m_torqueAccum;
     m_angularVelocity += angularAcceleration * dt;
+
     Quaternion angularVelocityQuat = Quaternion(0, m_angularVelocity.x(), m_angularVelocity.y(), m_angularVelocity.z());
 
     m_orientation = m_orientation + angularVelocityQuat * m_orientation * 0.5f * dt;
+    m_orientation.Normalize();
 
-    m_torqueAccum = Vector3D(0, 0, 0);;
+    m_torqueAccum = Vector3D(0, 0, 0);
 
     Particle::integrate(dt);
-
 }
 
 // Mis a Jour du tenseur Inertie

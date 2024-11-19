@@ -15,4 +15,5 @@ public:
 
 private:
 	ofBoxPrimitive m_box;
+	bool hasLaunched;
 };

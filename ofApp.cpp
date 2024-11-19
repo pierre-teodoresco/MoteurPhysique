@@ -25,37 +25,34 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    m_spawner.Update();
+
+    if(m_spawner.GetBoxes().empty()) return;
+
+    float dt = std::min((float)ofGetLastFrameTime(), 0.1f);
+
+    // Détection des collisions existantes durant cette frame
+    CollisionManager::detectCollisions(m_spawner.GetBoxes(), m_registry, m_gravityVec.norm(), dt);
+
+    // Application de la gravité
+        // Créer les forces (ici uniquement la gravité) et les ajouter au registre
 
     for (auto& box : m_spawner.GetBoxes()) {
-        float dt = std::min((float)ofGetLastFrameTime(), 0.1f);
+        m_registry->add(box, m_gravity);
+    }
+        
 
-        // Détection des collisions existantes durant cette frame
-        CollisionManager::detectCollisions(m_spawner.GetBoxes(), m_registry, m_gravityVec.norm(), dt);
+    // Appliquer les forces du registre
+    m_registry.get()->updateForces(dt);
 
-        // Application de la gravité
-        for (auto& p : m_spawner.GetBoxes()) {
-            // Créer les forces (ici uniquement la gravité) et les ajouter au registre
-            m_registry->add(p, m_gravity);
-        }
+    // Nettoyer le registre
 
-        for (auto s : activeSprings) {
-            m_registry->add(s->getParticle(), s);
-        }
-
-        // Appliquer les forces du registre
-        m_registry.get()->updateForces(dt);
-
-        // Nettoyer le registre
-        m_registry.get()->clear();
-
-        // Intégration
-        for (auto& p : m_spawner.GetBoxes()) {
-            // Intégrer avec le delta time
-            p->integrate(dt);
-        }
-
-	}
+    m_registry.get()->clear();
+        
+    // Intégration
+    for (auto& p : m_spawner.GetBoxes()) {
+        // Intégrer avec le delta time
+        p->integrate(dt);
+    }
 }
 
 //--------------------------------------------------------------
@@ -79,19 +76,7 @@ void ofApp::exit(){
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-    if (key == 'b' || key == 'f' || key == 'p') {
-        Ballistic::createParticle(key);
-    }
-    if (key == 'w')
-        Ballistic::addImpulseToBlob(Vector3D(0, -100, 0));
-    if (key == 'a')
-        Ballistic::addImpulseToBlob(Vector3D(-200, 0, 0));
-    if (key == 's')
-        Ballistic::addImpulseToBlob(Vector3D(0, 100, 0));
-    if (key == 'd')
-        Ballistic::addImpulseToBlob(Vector3D(200, 0, 0));
-
+void ofApp::keyPressed(int key) {
 }
 
 //--------------------------------------------------------------
@@ -111,7 +96,8 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    Ballistic::mousePressed(x, y);
+    m_spawner.GetBoxes().push_back(std::make_shared<Cube>(Vector3D(10.f, -350.f, 10.f), Vector3D(0.f, 0.f, 0.f),
+        1.f, 255.f, 255.f, 255.f, 10.f, 10.f, 500.F, Quaternion(1.f, 0.f, 0.f, 0.f)));
 }
 
 //--------------------------------------------------------------
