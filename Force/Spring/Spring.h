@@ -1,5 +1,6 @@
 #pragma once
 #include "Force/ParticleForceGenerator.hpp"
+#include "../../Particle/Particle.hpp"
 
 class Spring :
     public ParticleForceGenerator

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "Spawner.h"
 
 class ofApp : public ofBaseApp{
 
@@ -22,5 +23,10 @@ public:
     void windowResized(int w, int h) override;
     void dragEvent(ofDragInfo dragInfo) override;
     void gotMessage(ofMessage msg) override;
+
+private:
+    ofEasyCam m_camera;
+    ofBoxPrimitive m_box;
+    Spawner m_spawner;
 
 };

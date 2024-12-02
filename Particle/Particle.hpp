@@ -8,13 +8,13 @@
 #ifndef Particle_hpp
 #define Particle_hpp
 
-#include "Vector3D/Vector3D.hpp"
+#include "Vector/Vector3D.hpp"
 #include <array>
 #include <cmath>
 
 class Particle {
     
-private:
+protected:
     Vector3D m_position;
     Vector3D m_velocity;
     Vector3D m_acceleration; // Acceleration resulting from applied forces

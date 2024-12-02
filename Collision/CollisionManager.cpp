@@ -1,7 +1,7 @@
 #include "CollisionManager.h"
 #include "Force/Friction/ParticleFriction.hpp"
 
-void CollisionManager::detectCollisions(std::vector<std::shared_ptr<Particle>> particles, std::shared_ptr<ParticleForceRegistry> registry, float minSpeed, float frameTime)
+void CollisionManager::detectCollisions(std::vector<std::shared_ptr<Cube>> particles, std::shared_ptr<ParticleForceRegistry> registry, float minSpeed, float frameTime)
 {
     //Itération à travers chaque paire de particules
     for (int i = 0; i < particles.size(); i++)
