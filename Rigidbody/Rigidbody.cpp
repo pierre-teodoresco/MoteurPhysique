@@ -26,6 +26,14 @@ void RigidBody::addTorque(const Vector3D& torque) {
     m_torqueAccum += torque;
 }
 
+void RigidBody::addVelocity(const Vector3D& velo, const Vector3D& location)
+{
+    m_velocity += velo;
+
+    Vector3D lever = location - m_position;
+    m_angularVelocity += m_inverseInertiaTensor * lever * velo;
+}
+
 void RigidBody::integrate(float dt)
 {
     if (m_inverseMass <= 0.0f || m_isStaticObject) return; // If the particle has infinite mass, do not move it

@@ -26,7 +26,7 @@ public:
     // Setters
     void addForce(const Vector3D& force, const Vector3D& location);
     void addTorque(const Vector3D& torque);
-
+    void addVelocity(const Vector3D& velo, const Vector3D& location);
     // Getters
     const Quaternion& orientation() const { return m_orientation; }
     const Vector3D& angularVelocity() const { return m_angularVelocity; }
