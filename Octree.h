@@ -1,7 +1,7 @@
 #ifndef OCTREE_H
 #define OCTREE_H
 
-#include "Vector3D.h"
+#include "Vector\Vector3D.hpp"
 #include <vector>
 #include <memory>
 
@@ -21,9 +21,8 @@ struct SphereBound {
 };
 
 class Octree {
-public :
+public:
 	Octree(const SphereBound& limit, int size);
-	~Octree();
 
 	bool insert(const std::shared_ptr<SphereBound>& object);
 	void checkRange(const SphereBound& range, std::vector<std::shared_ptr<SphereBound>>& n_objects) const;
