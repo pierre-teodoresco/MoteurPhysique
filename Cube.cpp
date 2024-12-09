@@ -5,7 +5,7 @@ Cube::Cube(const Vector3D& position, const Vector3D& velocity, float mass, int r
 	: RigidBody(position,velocity,mass,red,green,blue,width,height,depth,orientation) {
 
 	m_box = ofBoxPrimitive();
-	m_box.set(width * height);
+	m_box.set(width, height, depth);
 
 	m_box.setPosition(position.x(), position.y(), position.z());
 	hasLaunched = false; 
@@ -27,7 +27,7 @@ void Cube::Draw() {
 
 void Cube::integrate(float dt) {
 	if (dt > 0.f && !hasLaunched) {
-		addForce(Vector3D(0.f,100000.f, 0.f), Vector3D(100.f, 100.f, 0.f));
+		addForce(Vector3D(0.f,70000.f, 0.f), m_position+Vector3D(2,0,0));
 		hasLaunched = true;
 	}
 

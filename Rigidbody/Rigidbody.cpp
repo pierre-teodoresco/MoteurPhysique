@@ -46,7 +46,7 @@ void RigidBody::integrate(float dt)
     Quaternion angularVelocityQuat = Quaternion(0, m_angularVelocity.x(), m_angularVelocity.y(), m_angularVelocity.z());
 
     m_orientation = m_orientation + angularVelocityQuat * m_orientation * 0.5f * dt;
-    m_orientation.Normalize();
+    m_orientation = m_orientation.Normalize();
 
     m_torqueAccum = Vector3D(0, 0, 0);
 

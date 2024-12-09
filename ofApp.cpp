@@ -96,8 +96,8 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    m_spawner.GetBoxes().push_back(std::make_shared<Cube>(Vector3D(10.f, -350.f, 10.f), Vector3D(0.f, 0.f, 0.f),
-        1.f, 255.f, 255.f, 255.f, 10.f, 10.f, 500.F, Quaternion(1.f, 0.f, 0.f, 0.f)));
+    m_spawner.GetBoxes().push_back(std::make_shared<Cube>(Vector3D(10.f, -350.f, -100.f), Vector3D(0.f, 0.f, 0.f),
+        1.f, 255.f, 255.f, 255.f, 50.f, 50.f, 50.f, Quaternion(1.f, 0.f, 0.f, 0.f)));
 }
 
 //--------------------------------------------------------------
