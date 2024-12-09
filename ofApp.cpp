@@ -4,6 +4,9 @@
 #include "Collision/CollisionManager.h"
 #include "Force/ParticleForceRegistry.hpp"
 #include "Force/Spring/Spring.h"
+#include "Octree.h"
+#include <cstdlib>
+
 
 std::shared_ptr<ParticleForceRegistry> m_registry;
 Vector3D m_gravityVec = Vector3D(0, -981.f, 0);
@@ -31,6 +34,8 @@ void ofApp::update(){
     float dt = std::min((float)ofGetLastFrameTime(), 0.1f);
 
     // Détection des collisions existantes durant cette frame
+    SphereBound spherebound = SphereBound(Vector3D(0, 0, 0), 10000.0f);
+    Octree octree = Octree(spherebound, 2);
     CollisionManager::detectCollisions(m_spawner.GetBoxes(), m_registry, m_gravityVec.norm(), dt);
 
     // Application de la gravité
@@ -96,8 +101,11 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    m_spawner.GetBoxes().push_back(std::make_shared<Cube>(Vector3D(100.f, -350.f, -100.f), Vector3D(0.f, 0.f, 0.f),
-        1.f, 255.f, 255.f, 255.f, 50.f, 50.f, 50.f, Quaternion(1.f, 0.f, 0.f, 0.f)));
+
+    float random = 30 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (60 - 30)));
+
+    m_spawner.GetBoxes().push_back(std::make_shared<Cube>(Vector3D(100.f, -350.f, -1000.f), Vector3D(0.f, 0.f, 0.f),
+        1.f, 255.f, 255.f, 255.f, random, random, random, Quaternion(1.f, 0.f, 0.f, 0.f)));
 }
 
 //--------------------------------------------------------------
