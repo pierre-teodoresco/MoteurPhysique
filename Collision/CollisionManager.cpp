@@ -141,7 +141,7 @@ void CollisionManager::detectCollisions(std::vector<std::shared_ptr<Cube>> cubes
                         i->addDisplacement(dispPerMass * (j->mass() * -1.0f));
                         j->addDisplacement(dispPerMass * i->mass());
 
-                        //Vitesse relative entre les deux particules, positif = elles s'éloignent l'une de l'autre
+                        //Vitesse relative entre les deux cubes, positif = elles s'éloignent l'une de l'autre
                         float relativeSpeed = (i->velocity() - j->velocity()).dot(normals.at(penetrationNormalIndex));
 
                         //Constante d'élasticité
@@ -163,9 +163,6 @@ void CollisionManager::detectCollisions(std::vector<std::shared_ptr<Cube>> cubes
 
                             i->addVelocity(normals.at(penetrationNormalIndex) * momentumTransfer * i->inverseMass() * -1.0f, v);
                             j->addVelocity(normals.at(penetrationNormalIndex) * momentumTransfer * j->inverseMass(), v);
-
-                            //registry->add(particleA, std::make_shared<ParticleKineticFriction>(particleB->friction(), -relativeSpeed));
-                            //registry->add(particleB, std::make_shared<ParticleKineticFriction>(particleA->friction(), -relativeSpeed));
                         }
                         return;
                     }
