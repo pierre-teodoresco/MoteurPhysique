@@ -54,6 +54,14 @@ void RigidBody::integrate(float dt)
 }
 
 
+
+//vertex layout:
+//2----6
+//|\   |\
+//| 3----7
+//0-|--4 |
+// \|   \|
+//  1----5
 std::vector<Vector3D> RigidBody::getVertices()
 {
     std::vector<Vector3D> vertices;
