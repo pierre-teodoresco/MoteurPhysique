@@ -2,6 +2,7 @@
 #include <vector>
 #include "of3dPrimitives.h"
 #include "Rigidbody/Rigidbody.hpp"
+#include "Vector/Vector3D.hpp"
 
 class Cube : public RigidBody {
 

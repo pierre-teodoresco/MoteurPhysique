@@ -53,6 +53,30 @@ void RigidBody::integrate(float dt)
     Particle::integrate(dt);
 }
 
+
+std::vector<Vector3D> RigidBody::getVertices()
+{
+    std::vector<Vector3D> vertices;
+    for (int i = -1; i <= 1; i = i + 2)
+    {
+        for (int j = -1; j <= 1; j = j + 2)
+        {
+            for (int k = -1; k <= 1; k = k + 2)
+            {
+                Vector3D vertex = Vector3D(0.5f * m_width * i, 0.5f * m_height * j, 0.5f * m_depth * k);
+                Quaternion vertexQuat = Quaternion(vertex);
+                Quaternion rotatedQuat = m_orientation * vertexQuat * m_orientation.Inverse();
+                Vector3D rotatedVertex = Vector3D(rotatedQuat.getX(), rotatedQuat.getY(), rotatedQuat.getZ());
+                Vector3D translatedVertex = rotatedVertex + m_position;
+                vertices.push_back(translatedVertex);
+            }
+        }
+    }
+
+
+    return vertices;
+}
+
 // Mis a Jour du tenseur Inertie
 void RigidBody::updateInertiaTensor() {
     m_inertiaTensor = Matrix3::identity();

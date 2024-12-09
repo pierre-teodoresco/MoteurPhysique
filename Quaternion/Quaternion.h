@@ -9,6 +9,7 @@ public:
 	// Constructors
 	Quaternion() : w(1), x(0), y(0), z(0) {}
 	Quaternion(float w, float x, float y, float z) : w(w), x(x), y(y), z(z) {}
+	Quaternion(Vector3D vec) : w(0), x(vec.x()), y(vec.y()), z(vec.z()) {};
 
 	float Norm() const;
 

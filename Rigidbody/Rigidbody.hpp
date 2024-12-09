@@ -5,6 +5,7 @@
 #include "../Matrix/Matrix4.hpp"
 #include "../Quaternion/Quaternion.h"
 #include "Particle/Particle.hpp"
+#include <vector>
 
 struct SphereBound;
 
@@ -35,6 +36,7 @@ public:
     const Vector3D& angularVelocity() const { return m_angularVelocity; }
 
     void integrate(float dt);
+    std::vector<Vector3D> getVertices();
 
     
 private:
