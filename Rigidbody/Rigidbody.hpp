@@ -6,6 +6,8 @@
 #include "../Quaternion/Quaternion.h"
 #include "Particle/Particle.hpp"
 
+struct SphereBound;
+
 class RigidBody : public Particle {
 public:
     Vector3D m_torqueAccum; // Force de torque
@@ -14,6 +16,7 @@ public:
     Matrix3 m_inertiaTensor; // Tenseur Inertie
     Matrix3 m_inverseInertiaTensor; // Inverse tenseur Inertie
     Matrix3 m_uprightInverseInertiaTensor; // Inverse tenseur Inertie quand l'objet n'a aucune rotation (J^-1)
+    std::shared_ptr<SphereBound> sphereBound; //Collision élargie
 
     float m_width; //x size
     float m_height; //y size

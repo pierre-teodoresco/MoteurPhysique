@@ -4,9 +4,9 @@
 Octree::Octree(const SphereBound& limit, int size) : s_limit(limit), s_size(size), isdivided(false)
 {}
 
-bool Octree::insert(const std::shared_ptr<SphereBound>& object)
+bool Octree::insert(const std::shared_ptr<RigidBody>& object)
 {
-	if (!s_limit.isspherecolide(*object)) {
+	if (!s_limit.isspherecolide(*object->sphereBound)) {
 		return false;
 	}
 
@@ -27,13 +27,13 @@ bool Octree::insert(const std::shared_ptr<SphereBound>& object)
 	return false;
 }
 
-void Octree::checkRange(const SphereBound& range, std::vector<std::shared_ptr<SphereBound>>& n_objects) const {
+void Octree::checkRange(const SphereBound& range, std::vector<std::shared_ptr<RigidBody>>& n_objects) const {
 	if (!s_limit.isspherecolide(range)) {
 		return;
 	}
 
 	for (const auto& object : cell_objects) {
-		if (range.isspherecolide(*object)) {
+		if (range.isspherecolide(*object->sphereBound)) {
 			n_objects.push_back(object);
 		}
 	}

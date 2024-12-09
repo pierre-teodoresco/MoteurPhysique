@@ -1,5 +1,6 @@
 #pragma once
 #include <algorithm>
+#include "..\Octree.h"
 #include "Rigidbody.hpp"
 
 // Constructeur
